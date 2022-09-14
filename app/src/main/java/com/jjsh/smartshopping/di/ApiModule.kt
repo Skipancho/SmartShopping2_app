@@ -6,6 +6,7 @@ import com.jjsh.smartshopping.data.remote.RefreshTokenInterceptor
 import com.jjsh.smartshopping.data.remote.TokenAuthenticator
 import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
+import com.jjsh.smartshopping.data.remote.api.TokenService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -86,6 +88,12 @@ object ApiModule {
     fun provideProductService(
         @HttpClientRetrofit retrofit: Retrofit
     ): ProductService = retrofit.create(ProductService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTokenService(
+        @RefreshClientRetrofit retrofit: Retrofit
+    ): TokenService = retrofit.create(TokenService::class.java)
 }
 
 @Retention(AnnotationRetention.BINARY)
