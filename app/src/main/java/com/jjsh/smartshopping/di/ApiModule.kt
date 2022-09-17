@@ -33,7 +33,10 @@ object ApiModule {
         OkHttpClient.Builder().apply {
             addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
+                    level = if (BuildConfig.DEBUG)
+                        HttpLoggingInterceptor.Level.BODY
+                    else
+                        HttpLoggingInterceptor.Level.NONE
                 }
             )
             addInterceptor(apiTokenInterceptor)
@@ -49,7 +52,10 @@ object ApiModule {
         OkHttpClient.Builder().apply {
             addInterceptor(
                 HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
+                    level = if (BuildConfig.DEBUG)
+                        HttpLoggingInterceptor.Level.BODY
+                    else
+                        HttpLoggingInterceptor.Level.NONE
                 }
             )
             addInterceptor(refreshTokenInterceptor)
