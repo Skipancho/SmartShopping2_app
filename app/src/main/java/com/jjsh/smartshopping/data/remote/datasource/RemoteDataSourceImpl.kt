@@ -5,6 +5,7 @@ import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
+import com.jjsh.smartshopping.data.remote.response.ProductResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
 import com.jjsh.smartshopping.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -46,6 +47,31 @@ class RemoteDataSourceImpl @Inject constructor(
         return withContext(ioDispatcher){
             runCatching {
                 authService.validateNickName(nickName).successOrThrow()
+            }
+        }
+    }
+
+    override suspend fun getProduct(id: Long): Result<ProductResponse> {
+        return withContext(ioDispatcher){
+            runCatching {
+                val response = productService.getProduct(id)
+                response.successOrThrow()
+                response.getOrThrow(ErrorException.ProductException)
+            }
+        }
+    }
+
+    override suspend fun getProducts(
+        productId: Long,
+        categoryId: Int?,
+        direction: String,
+        keyword: String?
+    ): Result<List<ProductResponse>> {
+        return withContext(ioDispatcher){
+            runCatching {
+                val response = productService.getProducts(productId, categoryId, direction, keyword)
+                response.successOrThrow()
+                response.getOrThrow(ErrorException.ProductException)
             }
         }
     }
