@@ -17,15 +17,15 @@ interface AuthService {
     @POST("/api/v1/users")
     suspend fun signup(
         @Body signupRequest: SignupRequest
-    ) : ApiResponse<Void>
+    ) : ApiResponse<Unit>
 
     @POST("/api/v1/users/id")
     suspend fun validateUserId(
         @Query("userId") userId : String
-    ) : ApiResponse<Void>
+    ) : ApiResponse<Unit>
 
     @POST("/api/v1/users/nickname")
     suspend fun validateNickName(
         @Query("nickName") nickName : String
-    ) : ApiResponse<Void>
+    ) : ApiResponse<Unit>
 }

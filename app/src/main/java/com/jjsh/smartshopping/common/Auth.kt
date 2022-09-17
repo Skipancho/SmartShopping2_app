@@ -1,19 +1,13 @@
 package com.jjsh.smartshopping.common
 
-import android.content.Context
-import androidx.preference.PreferenceManager
-import dagger.hilt.android.qualifiers.ApplicationContext
+import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Auth @Inject constructor(
-    @ApplicationContext context: Context
+    private val prefs : SharedPreferences
 ) {
-    private val prefs by lazy {
-        PreferenceManager.getDefaultSharedPreferences(context)
-    }
-
     var token: String?
         get() = prefs.getString(TOKEN, null)
         set(value) = prefs.edit().putString(TOKEN, value).apply()
