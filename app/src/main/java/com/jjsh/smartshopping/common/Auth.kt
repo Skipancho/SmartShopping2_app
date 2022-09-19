@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Auth @Inject constructor(
-    private val prefs : SharedPreferences
+    private val prefs: SharedPreferences
 ) {
     var token: String?
         get() = prefs.getString(TOKEN, null)
@@ -34,6 +34,20 @@ class Auth @Inject constructor(
         nickName = null
         userCode = -1
         userId = null
+    }
+
+    fun signin(
+        token: String,
+        refreshToken: String,
+        nickName: String,
+        userCode: Long,
+        userId: String
+    ) {
+        this.token = token
+        this.refreshToken = refreshToken
+        this.nickName = nickName
+        this.userCode = userCode
+        this.userId = userId
     }
 
     companion object {
