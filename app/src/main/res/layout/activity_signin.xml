@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.jjsh.smartshopping.presentation.signin.SigninViewModel" />
@@ -57,5 +58,14 @@
             android:text="로그인"
             android:onClick="@{()->viewModel.signin()}"
             app:layout_constraintTop_toBottomOf="@id/til_password" />
+
+        <ProgressBar
+            android:visibility="@{viewModel.isProgressOn? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
