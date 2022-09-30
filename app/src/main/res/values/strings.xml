@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SmartShopping</string>
+
+    <!--error msg-->
+    <string name="err_msg_signin">로그인하는 과정에서 오류가 발생했습니다. 다시 시도해 주세요.</string>
+    <string name="err_msg_product">상품을 조회하는 과정에서 오류가 발생했습니다.</string>
+    <string name="err_msg_unknown">알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.</string>
 </resources>
