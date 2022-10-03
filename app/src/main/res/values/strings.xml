@@ -4,6 +4,8 @@
     <!--toast msg-->
     <string name="toast_msg_id_checked">이용 가능한 아이디 입니다.</string>
     <string name="toast_msg_nickname_checked">이용 가능한 닉네임 입니다.</string>
+    <string name="toast_msg_success_signin">로그인에 성공하셨습니다.</string>
+    <string name="toast_msg_success_signup">회원가입에 성공하셨습니다.</string>
 
     <!--error msg-->
     <string name="err_msg_password">비밀번호가 일치하지 않습니다.</string>
