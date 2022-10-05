@@ -9,6 +9,8 @@ import com.jjsh.smartshopping.presentation.MainActivity
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
+import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.signup.SignupActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +46,12 @@ class SigninActivity : BaseActivity<ActivitySigninBinding>() {
                 else -> {
                     //do nothing
                 }
+            }
+        }
+        observeFlowWithLifecycle(viewModel.moveToSignupEvent){
+            if (it){
+                start<SignupActivity>()
+                viewModel.initEvent()
             }
         }
     }
