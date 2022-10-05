@@ -18,6 +18,12 @@ class ErrorHandler(private val context: Context) {
                 is ErrorException.ProductException -> {
                     shortToast(getString(R.string.err_msg_product))
                 }
+                is ErrorException.SignupCheckedException -> {
+                    shortToast(getString(R.string.err_msg_signup_checked))
+                }
+                is ErrorException.EmptyMemberException -> {
+                    shortToast(getString(R.string.err_msg_empty_member))
+                }
                 else -> {
                     shortToast(getString(R.string.err_msg_unknown))
                 }

@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">SmartShopping</string>
 
+    <!--toast msg-->
+    <string name="toast_msg_id_checked">이용 가능한 아이디 입니다.</string>
+    <string name="toast_msg_nickname_checked">이용 가능한 닉네임 입니다.</string>
+    <string name="toast_msg_success_signin">로그인에 성공하셨습니다.</string>
+    <string name="toast_msg_success_signup">회원가입에 성공하셨습니다.</string>
+
     <!--error msg-->
+    <string name="err_msg_password">비밀번호가 일치하지 않습니다.</string>
     <string name="err_msg_signin">로그인하는 과정에서 오류가 발생했습니다. 다시 시도해 주세요.</string>
     <string name="err_msg_product">상품을 조회하는 과정에서 오류가 발생했습니다.</string>
+    <string name="err_msg_signup_checked">아이디 및 닉네임 중복 확인을 해주세요.</string>
+    <string name="err_msg_empty_member">빈칸을 확인해 주세요.</string>
     <string name="err_msg_unknown">알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.</string>
+
 </resources>

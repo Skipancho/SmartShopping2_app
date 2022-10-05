@@ -20,6 +20,9 @@ class SigninViewModel @Inject constructor(
     private val _isProgressOn = MutableStateFlow(false)
     val isProgressOn: StateFlow<Boolean> get() = _isProgressOn
 
+    private val _moveToSignupEvent = MutableStateFlow(false)
+    val moveToSignupEvent : StateFlow<Boolean> get() = _moveToSignupEvent
+
     val userId = MutableStateFlow("")
     val password = MutableStateFlow("")
 
@@ -37,5 +40,13 @@ class SigninViewModel @Inject constructor(
 
     fun setProgress(isProgressBarOn: Boolean) {
         _isProgressOn.value = isProgressBarOn
+    }
+
+    fun moveToSignup(){
+        _moveToSignupEvent.value = true
+    }
+
+    fun initEvent(){
+        _moveToSignupEvent.value = false
     }
 }

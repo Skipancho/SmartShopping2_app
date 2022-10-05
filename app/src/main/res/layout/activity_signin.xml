@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.jjsh.smartshopping.presentation.signin.SigninViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -27,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:hint="아이디"
-                android:text="@={viewModel.userId}"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="@={viewModel.userId}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -45,27 +49,38 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:hint="비밀번호"
-                android:text="@={viewModel.password}"
                 android:inputType="textPassword"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="@={viewModel.password}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
-            android:text="로그인"
             android:onClick="@{()->viewModel.signin()}"
+            android:text="로그인"
             app:layout_constraintTop_toBottomOf="@id/til_password" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{()->viewModel.moveToSignup()}"
+            android:text="회원 가입"
+            app:layout_constraintTop_toBottomOf="@id/btn_signin" />
+
         <ProgressBar
-            android:visibility="@{viewModel.isProgressOn? View.VISIBLE : View.GONE}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{viewModel.isProgressOn? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
