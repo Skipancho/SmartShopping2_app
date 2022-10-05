@@ -63,16 +63,18 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>() {
             observeFlowWithLifecycle(uiState){
                 when(it){
                     is UiState.Init -> {
-
+                        viewModel.setProgress(false)
                     }
                     is UiState.Loading -> {
-
+                        viewModel.setProgress(true)
                     }
                     is UiState.Success -> {
+                        viewModel.setProgress(false)
                         shortToast(getString(R.string.toast_msg_success_signup))
                         finish()
                     }
                     is UiState.Error -> {
+                        viewModel.setProgress(false)
                         errorHandler.errorHandling(it.err)
                     }
                 }

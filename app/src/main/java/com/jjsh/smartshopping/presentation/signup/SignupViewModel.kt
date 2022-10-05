@@ -41,6 +41,9 @@ class SignupViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Init)
     val uiState: StateFlow<UiState<Unit>> get() = _uiState
 
+    private val _isProgressOn = MutableStateFlow(false)
+    val isProgressOn: StateFlow<Boolean> get() = _isProgressOn
+
     fun signup() {
         if (!idChecked.value || !nickNameChecked.value) {
             _uiState.value = UiState.Error(ErrorException.SignupCheckedException)
@@ -111,5 +114,9 @@ class SignupViewModel @Inject constructor(
 
     fun initUiState() {
         _uiState.value = UiState.Init
+    }
+
+    fun setProgress(isProgressBarOn: Boolean) {
+        _isProgressOn.value = isProgressBarOn
     }
 }
