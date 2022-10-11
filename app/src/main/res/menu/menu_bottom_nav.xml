@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_home"
+        android:title="홈"
+        android:icon="@drawable/ic_home_24"
+        />
+    <item
+        android:id="@+id/item_cart"
+        android:title="장바구니"
+        android:icon="@drawable/ic_cart_24"/>
+    <item
+        android:id="@+id/item_checklist"
+        android:title="체크리스트"
+        android:icon="@drawable/ic_checklist_24"/>
+    <item
+        android:id="@+id/item_chart"
+        android:title="지출 통계"
+        android:icon="@drawable/ic_chart_24"/>
+</menu>

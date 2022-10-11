@@ -1,6 +1,7 @@
 package com.jjsh.smartshopping.presentation.base
 
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -10,9 +11,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity() {
+abstract class BaseActivity<T: ViewDataBinding>(
+    @LayoutRes val layoutRes: Int
+): AppCompatActivity() {
     protected lateinit var binding: T
-    abstract val layoutRes: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
