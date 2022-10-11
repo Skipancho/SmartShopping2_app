@@ -8,9 +8,7 @@ import com.jjsh.smartshopping.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    override val layoutRes: Int
-        get() = R.layout.activity_main
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val viewModel by viewModels<MainViewModel>()
 

@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySigninBinding
 import com.jjsh.smartshopping.presentation.ErrorHandler
-import com.jjsh.smartshopping.presentation.MainActivity
+import com.jjsh.smartshopping.presentation.main.MainActivity
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
@@ -14,10 +14,7 @@ import com.jjsh.smartshopping.presentation.signup.SignupActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SigninActivity : BaseActivity<ActivitySigninBinding>() {
-
-    override val layoutRes: Int
-        get() = R.layout.activity_signin
+class SigninActivity : BaseActivity<ActivitySigninBinding>(R.layout.activity_signin) {
 
     private val viewModel by viewModels<SigninViewModel>()
 

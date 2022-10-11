@@ -13,9 +13,7 @@ import com.jjsh.smartshopping.presentation.extension.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignupActivity : BaseActivity<ActivitySignupBinding>() {
-    override val layoutRes: Int
-        get() = R.layout.activity_signup
+class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
 
     private val viewModel by viewModels<SignupViewModel>()
 
