@@ -9,11 +9,12 @@ import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityMainBinding
 import com.jjsh.smartshopping.presentation.adapter.ViewPagerAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
-import com.jjsh.smartshopping.presentation.extension.shortToast
+import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.main.cart.CartFragment
 import com.jjsh.smartshopping.presentation.main.chart.ChartFragment
 import com.jjsh.smartshopping.presentation.main.checklist.CheckListFragment
 import com.jjsh.smartshopping.presentation.main.home.HomeFragment
+import com.jjsh.smartshopping.presentation.mypage.MypageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,7 +92,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main_appbar,menu)
+        menuInflater.inflate(R.menu.menu_main_appbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -101,8 +102,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 binding.vpFragments.currentItem = 0
             }
             R.id.item_mypage -> {
-                //todo. start mypage
-                shortToast("mypage")
+                start<MypageActivity>()
+                overridePendingTransition(R.anim.anim_right_in, R.anim.anim_default)
             }
         }
         return super.onOptionsItemSelected(item)
