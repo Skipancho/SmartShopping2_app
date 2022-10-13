@@ -15,4 +15,10 @@
     <string name="err_msg_empty_member">빈칸을 확인해 주세요.</string>
     <string name="err_msg_unknown">알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.</string>
 
+    <string name="text_home">홈</string>
+    <string name="text_cart">장바구니</string>
+    <string name="text_checklist">체크리스트</string>
+    <string name="text_chart">지출 통계</string>
+    <string name="text_mypage">마이페이지</string>
+
 </resources>
