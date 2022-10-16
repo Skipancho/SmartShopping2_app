@@ -20,5 +20,6 @@
     <string name="text_checklist">체크리스트</string>
     <string name="text_chart">지출 통계</string>
     <string name="text_mypage">마이페이지</string>
+    <string name="text_sign_out">로그아웃</string>
 
 </resources>
