@@ -1,10 +1,55 @@
 package com.jjsh.smartshopping.presentation.mypage
 
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityMypageBinding
+import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.base.BaseActivity
+import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
+import com.jjsh.smartshopping.presentation.signin.SigninActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_mypage) {
+
+    private val viewModel by viewModels<MypageViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding.viewModel = viewModel
+
+        initActionBar()
+        observeData()
+    }
+
+    private fun initActionBar() {
+        setSupportActionBar(binding.mtbToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_24)
+    }
+
+    private fun observeData() {
+        observeFlowWithLifecycle(viewModel.signOutEvent){
+            when(it){
+                is UiEvent.Success ->{
+                    clearTaskAndStart<SigninActivity>()
+                }
+                else -> {}
+            }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun finish() {
         super.finish()
