@@ -28,12 +28,17 @@ class Auth @Inject constructor(
         get() = prefs.getString(USER_ID, null)
         set(value) = prefs.edit().putString(USER_ID, value).apply()
 
+    var userName: String?
+        get() = prefs.getString(USER_NAME, null)
+        set(value) = prefs.edit().putString(USER_NAME, value).apply()
+
     fun signOut() {
         token = null
         refreshToken = null
         nickName = null
         userCode = -1
         userId = null
+        userName = null
     }
 
     fun signin(
@@ -41,13 +46,15 @@ class Auth @Inject constructor(
         refreshToken: String,
         nickName: String,
         userCode: Long,
-        userId: String
+        userId: String,
+        userName: String
     ) {
         this.token = token
         this.refreshToken = refreshToken
         this.nickName = nickName
         this.userCode = userCode
         this.userId = userId
+        this.userName = userName
     }
 
     companion object {
@@ -56,5 +63,6 @@ class Auth @Inject constructor(
         private const val USER_NICKNAME = "user_nickname"
         private const val USER_CODE = "user_code"
         private const val USER_ID = "user_id"
+        private const val USER_NAME = "user_name"
     }
 }

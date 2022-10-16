@@ -16,7 +16,14 @@ class AuthRepositoryImpl @Inject constructor(
         return remoteDataSource
             .signin(SigninRequest(userId, password))
             .mapCatching {
-                auth.signin(it.token, it.refreshToken, it.nickName, it.userCode, userId)
+                auth.signin(
+                    it.token,
+                    it.refreshToken,
+                    it.nickName,
+                    it.userCode,
+                    userId,
+                    it.userName
+                )
             }
     }
 
