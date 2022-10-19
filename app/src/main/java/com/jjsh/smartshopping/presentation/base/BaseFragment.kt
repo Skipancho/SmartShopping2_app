@@ -8,6 +8,11 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 abstract class BaseFragment<T : ViewDataBinding>(
     @LayoutRes val layoutRes: Int
@@ -32,5 +37,12 @@ abstract class BaseFragment<T : ViewDataBinding>(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    protected fun <T> observeFlowWithLifecycle(flow: Flow<T>, block: (T) -> Unit) {
+        flow.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                block(it)
+            }.launchIn(lifecycleScope)
     }
 }

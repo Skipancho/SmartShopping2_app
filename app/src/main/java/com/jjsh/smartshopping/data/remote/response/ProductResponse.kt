@@ -21,6 +21,7 @@ data class ProductResponse(
         sPrice = sPrice,
         status = status,
         sellerId = sellerId,
-        imagePaths = imagePaths
+        imagePaths = imagePaths,
+        thumbnailPath = imagePaths.firstOrNull() ?: ""
     )
 }
