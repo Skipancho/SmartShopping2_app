@@ -8,5 +8,8 @@ data class Product(
     val sPrice: Int,
     val status: String,
     val sellerId: Long,
-    val imagePaths: List<String>
-)
+    val imagePaths: List<String>,
+    val thumbnailPath: String
+) {
+    val sale = (100 * (nPrice - sPrice)) / nPrice
+}
