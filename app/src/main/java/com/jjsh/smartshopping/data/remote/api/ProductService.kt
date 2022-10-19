@@ -12,7 +12,8 @@ interface ProductService {
         @Query("productId") productId: Long,
         @Query("categoryId") categoryId: Int?,
         @Query("direction") direction: String,
-        @Query("keyword") keyword: String? = null
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") pageSize: Int = 10
     ): ApiResponse<List<ProductResponse>>
 
     @GET("/api/v1/products/{id}")
