@@ -26,12 +26,12 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getProducts()
+        getProducts(Long.MAX_VALUE)
     }
 
-    private fun getProducts(){
+    private fun getProducts(startProductId: Long){
         viewModelScope.launch {
-            productRepository.getProducts(Long.MAX_VALUE,null,"next",null)
+            productRepository.getProducts(startProductId,null,"next",null)
                 .onSuccess {
                     currentProductList.addAll(it)
                     _products.value = UiState.Success(currentProductList)
@@ -43,16 +43,7 @@ class HomeViewModel @Inject constructor(
 
     fun getNextPage(){
         if (currentProductList.isEmpty()) return
-        viewModelScope.launch {
-            _isProgressOn.value = true
-            productRepository.getProducts(currentProductList.last().id,null,"next",null)
-                .onSuccess {
-                    currentProductList.addAll(it)
-                    _products.value = UiState.Success(currentProductList)
-                }.onFailure {
-                    _products.value = UiState.Error(it)
-                }
-        }
+        getProducts(currentProductList.last().id)
     }
 
     fun initProducts(){
