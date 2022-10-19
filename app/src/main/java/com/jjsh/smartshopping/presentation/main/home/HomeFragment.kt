@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentHomeBinding
 import com.jjsh.smartshopping.presentation.ErrorHandler
-import com.jjsh.smartshopping.presentation.UiState
+import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +25,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
+        viewModel.initProducts()
+
         initView()
         observeData()
     }
@@ -51,18 +53,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         val errorHandler = ErrorHandler(requireContext())
         observeFlowWithLifecycle(viewModel.products) {
             when (it) {
-                is UiState.Init -> {
-                    //do nothing
-                }
-                is UiState.Loading -> {
-
-                }
-                is UiState.Success -> {
+                is UiEvent.Success -> {
                     Timber.e("list size : ${it.data.size}")
                     productAdapter.submitList(it.data.toMutableList())
-                    viewModel.initProducts()
                 }
-                is UiState.Error -> {
+                is UiEvent.Error -> {
                     errorHandler.errorHandling(it.err)
                 }
             }
