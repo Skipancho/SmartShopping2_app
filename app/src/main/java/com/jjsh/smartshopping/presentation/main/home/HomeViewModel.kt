@@ -20,8 +20,12 @@ class HomeViewModel @Inject constructor(
 
     private val currentProductList = mutableListOf<Product>()
 
-    private val _products  = MutableSharedFlow<UiEvent<List<Product>>>()
+    private val _products = MutableSharedFlow<UiEvent<List<Product>>>()
     val products: SharedFlow<UiEvent<List<Product>>> get() = _products
+
+    private val _moveToSearchEvent = MutableStateFlow(false)
+    val moveToSearchEvent : StateFlow<Boolean> get() = _moveToSearchEvent
+
 
     private val _isProgressOn = MutableStateFlow(false)
     val isProgressOn: StateFlow<Boolean> get() = _isProgressOn
@@ -48,5 +52,13 @@ class HomeViewModel @Inject constructor(
     fun getNextPage(){
         if (currentProductList.isEmpty()) return
         getProducts(currentProductList.last().id)
+    }
+
+    fun moveToSearchPage() {
+        _moveToSearchEvent.value = true
+    }
+
+    fun initMoveToSearchPageEvent() {
+        _moveToSearchEvent.value = false
     }
 }

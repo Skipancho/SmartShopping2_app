@@ -11,6 +11,9 @@ import com.jjsh.smartshopping.presentation.ErrorHandler
 import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
+import com.jjsh.smartshopping.presentation.extension.shortToast
+import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -60,6 +63,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 is UiEvent.Error -> {
                     errorHandler.errorHandling(it.err)
                 }
+            }
+        }
+        observeFlowWithLifecycle(viewModel.moveToSearchEvent) {
+            if (it){
+                requireContext().start<SearchActivity>()
+                viewModel.initMoveToSearchPageEvent()
             }
         }
     }

@@ -39,6 +39,7 @@
                     android:text="@string/text_search_product"
                     android:textColor="@color/gray_828282"
                     android:textSize="16sp"
+                    android:onClick="@{() -> viewModel.moveToSearchPage()}"
                     app:drawableStartCompat="@drawable/ic_search_24" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
