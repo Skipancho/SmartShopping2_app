@@ -5,12 +5,17 @@ import com.jjsh.smartshopping.domain.model.Product
 interface ProductRepository {
     suspend fun getProducts(
         productId: Long,
-        categoryId: Int?,
-        direction: String,
-        keyword: String?
+        categoryId: Int? = null,
+        direction: String = NEXT,
+        keyword: String? = null
     ): Result<List<Product>>
 
-    suspend fun getProduct(
+    suspend fun getProductItem(
         productId: Long
     ): Result<Product>
+
+    companion object{
+        const val NEXT = "next"
+        const val PREV = "prev"
+    }
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.repository.ProductRepository
 import com.jjsh.smartshopping.presentation.UiEvent
-import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private fun getProducts(startProductId: Long){
         viewModelScope.launch {
             _isProgressOn.value = true
-            productRepository.getProducts(startProductId,null,"next",null)
+            productRepository.getProducts(startProductId)
                 .onSuccess {
                     currentProductList.addAll(it)
                     _products.emit(UiEvent.Success(currentProductList))
