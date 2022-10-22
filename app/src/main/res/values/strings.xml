@@ -24,5 +24,6 @@
     <string name="text_chart">지출 통계</string>
     <string name="text_mypage">마이페이지</string>
     <string name="text_sign_out">로그아웃</string>
+    <string name="text_search_product">상품을 검색하세요.</string>
 
 </resources>

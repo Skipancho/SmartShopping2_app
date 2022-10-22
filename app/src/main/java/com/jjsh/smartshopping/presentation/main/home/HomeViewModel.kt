@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.repository.ProductRepository
 import com.jjsh.smartshopping.presentation.UiEvent
-import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +20,12 @@ class HomeViewModel @Inject constructor(
 
     private val currentProductList = mutableListOf<Product>()
 
-    private val _products  = MutableSharedFlow<UiEvent<List<Product>>>()
+    private val _products = MutableSharedFlow<UiEvent<List<Product>>>()
     val products: SharedFlow<UiEvent<List<Product>>> get() = _products
+
+    private val _moveToSearchEvent = MutableStateFlow(false)
+    val moveToSearchEvent : StateFlow<Boolean> get() = _moveToSearchEvent
+
 
     private val _isProgressOn = MutableStateFlow(false)
     val isProgressOn: StateFlow<Boolean> get() = _isProgressOn
@@ -30,7 +33,7 @@ class HomeViewModel @Inject constructor(
     private fun getProducts(startProductId: Long){
         viewModelScope.launch {
             _isProgressOn.value = true
-            productRepository.getProducts(startProductId,null,"next",null)
+            productRepository.getProducts(startProductId)
                 .onSuccess {
                     currentProductList.addAll(it)
                     _products.emit(UiEvent.Success(currentProductList))
@@ -49,5 +52,13 @@ class HomeViewModel @Inject constructor(
     fun getNextPage(){
         if (currentProductList.isEmpty()) return
         getProducts(currentProductList.last().id)
+    }
+
+    fun moveToSearchPage() {
+        _moveToSearchEvent.value = true
+    }
+
+    fun initMoveToSearchPageEvent() {
+        _moveToSearchEvent.value = false
     }
 }
