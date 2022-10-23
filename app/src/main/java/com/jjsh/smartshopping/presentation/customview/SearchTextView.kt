@@ -16,13 +16,14 @@ class SearchTextView(
     context: Context,
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
-    private var backButtonClickListener: (() -> Unit) = {}
-    private var searchButtonClickListener: ((String) -> Unit) = {}
-    private var deleteButtonClickListener: (() -> Unit) = { clearText() }
-    private var textChangeListener: (() -> Unit) = {}
+    private var backButtonClickListener: () -> Unit = {}
+    private var searchButtonClickListener: (String) -> Unit = {}
+    private var deleteButtonClickListener: () -> Unit = { clearText() }
+    private var textChangeListener: (String) -> Unit = {}
+    private var focusChangeListener: (Boolean) -> Unit = {}
     private lateinit var binding: LayoutCustomSearchViewBinding
 
-    val text: Editable
+    private val text: Editable
         get() = binding.etSearch.text
 
     var hint: CharSequence
@@ -39,6 +40,7 @@ class SearchTextView(
         initView()
         matchEvent()
         observeText()
+        autoFocus()
     }
 
     private fun initView() {
@@ -53,14 +55,21 @@ class SearchTextView(
             ibBack.setOnClickListener { backButtonClickListener() }
             ibSearch.setOnClickListener { searchButtonClickListener(text.toString()) }
             ibDelete.setOnClickListener { deleteButtonClickListener() }
+            etSearch.setOnFocusChangeListener { _, hasFocus ->
+                focusChangeListener(hasFocus)
+            }
         }
+    }
+
+    private fun autoFocus() {
+        binding.etSearch.requestFocus()
     }
 
     private fun observeText() {
         binding.etSearch.addTextChangedListener {
             with(text.isNotEmpty()) {
                 binding.ibDelete.isVisible = this
-                textChangeListener
+                textChangeListener(text.toString())
             }
         }
     }
@@ -73,15 +82,22 @@ class SearchTextView(
     }
 
     fun setSearchButtonClickListener(action: (String) -> Unit) {
-        searchButtonClickListener = action
+        searchButtonClickListener = {
+            action(it)
+            binding.etSearch.clearFocus()
+        }
     }
 
     fun setBackButtonClickListener(action: () -> Unit) {
         backButtonClickListener = action
     }
 
-    fun setTextChangeListener(action: () -> Unit) {
+    fun setTextChangeListener(action: (String) -> Unit) {
         textChangeListener = action
+    }
+
+    fun setFocusChangeListener(action: (Boolean) -> Unit) {
+        focusChangeListener = action
     }
 
     fun setText(charSequence: CharSequence) {
@@ -114,6 +130,11 @@ fun SearchTextView.setOnBackClickListener(action: () -> Unit) {
 }
 
 @BindingAdapter("onTextChange")
-fun SearchTextView.setOnTextChangeListener(action: () -> Unit) {
+fun SearchTextView.setOnTextChangeListener(action: (String) -> Unit) {
     setTextChangeListener(action)
+}
+
+@BindingAdapter("onFocusChange")
+fun SearchTextView.setOnFocusChangeListener(action: (Boolean) -> Unit) {
+    setFocusChangeListener(action)
 }
