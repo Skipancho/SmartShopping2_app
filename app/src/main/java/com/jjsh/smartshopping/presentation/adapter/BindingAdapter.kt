@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.common.ImageLoader
-import java.text.NumberFormat
 
 @BindingAdapter("image")
 fun ImageView.setImage(imageUrl: String) {
