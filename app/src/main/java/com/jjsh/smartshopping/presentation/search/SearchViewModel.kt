@@ -6,10 +6,11 @@ import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.repository.ProductRepository
 import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,8 @@ class SearchViewModel @Inject constructor(
     private var _moveToBack: () -> Unit = { }
     val moveToBack: () -> Unit get() = _moveToBack
 
+    private var debounceJob : Job? = null
+
     val search: (String) -> Unit = {
         currentProductList.clear()
         currentSearchText = it
@@ -39,17 +42,28 @@ class SearchViewModel @Inject constructor(
     }
 
     val onTextChange: (String) -> Unit = {
-
+        if (it.isNotEmpty()){
+            currentSearchText = it
+            debounceSearch()
+        }
     }
 
     val onFocusSearch: (Boolean) -> Unit = {
-        Timber.e("onFocusSearch")
         _hasSearchViewFocus.value = it
     }
 
     fun getNextPage() {
         if (currentProductList.isEmpty()) return
         searchProducts(currentProductList.last().id)
+    }
+
+    private fun debounceSearch(){
+        debounceJob?.cancel()
+        debounceJob = viewModelScope.launch {
+            delay(500L)
+            searchProducts(Long.MAX_VALUE)
+            _hasSearchViewFocus.value = false
+        }
     }
 
     private fun searchProducts(startProductId: Long) {
