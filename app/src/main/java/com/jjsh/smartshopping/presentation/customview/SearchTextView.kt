@@ -5,6 +5,7 @@ import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -18,7 +19,7 @@ class SearchTextView(
 ) : LinearLayout(context, attrs) {
     private var backButtonClickListener: () -> Unit = {}
     private var searchButtonClickListener: (String) -> Unit = {}
-    private var deleteButtonClickListener: () -> Unit = { clearText() }
+    private var deleteButtonClickListener: () -> Unit = {}
     private var textChangeListener: (String) -> Unit = {}
     private var focusChangeListener: (Boolean) -> Unit = {}
     private lateinit var binding: LayoutCustomSearchViewBinding
@@ -58,6 +59,13 @@ class SearchTextView(
             etSearch.setOnFocusChangeListener { _, hasFocus ->
                 focusChangeListener(hasFocus)
             }
+            etSearch.setOnEditorActionListener { _, i, _ ->
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    searchButtonClickListener(text.toString())
+                    return@setOnEditorActionListener true
+                }
+                return@setOnEditorActionListener false
+            }
         }
     }
 
@@ -78,6 +86,7 @@ class SearchTextView(
         deleteButtonClickListener = {
             action()
             clearText()
+            binding.etSearch.requestFocus()
         }
     }
 
