@@ -58,6 +58,10 @@ class SearchTextView(
             ibDelete.setOnClickListener { deleteButtonClickListener() }
             etSearch.setOnFocusChangeListener { _, hasFocus ->
                 focusChangeListener(hasFocus)
+                mdSearchDivider.setBackgroundResource(
+                    if (hasFocus) R.color.background
+                    else R.color.gray_828282
+                )
             }
             etSearch.setOnEditorActionListener { _, i, _ ->
                 if (i == EditorInfo.IME_ACTION_SEARCH) {

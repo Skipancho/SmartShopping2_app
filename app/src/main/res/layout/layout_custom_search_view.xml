@@ -18,7 +18,7 @@
             android:layout_marginStart="5dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_back_24"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon" />
 
         <EditText
             android:id="@+id/et_search"
@@ -39,7 +39,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_close_24"
             android:visibility="gone"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon"  />
 
         <ImageButton
             android:id="@+id/ib_search"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="5dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search_24"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon"  />
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
