@@ -38,7 +38,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 supportFragmentManager.commit {
                     replace(binding.flFragment.id, resultFragment)
                 }
-                binding.stvSearch.findFocus().clearFocus()
+                if (binding.stvSearch.findFocus() != null)
+                    binding.stvSearch.findFocus().clearFocus()
                 inputMethodManager.hideSoftInputFromWindow(binding.stvSearch.windowToken, 0)
             }
         }

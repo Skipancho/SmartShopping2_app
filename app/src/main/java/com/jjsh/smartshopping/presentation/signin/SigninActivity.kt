@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySigninBinding
-import com.jjsh.smartshopping.presentation.ErrorHandler
 import com.jjsh.smartshopping.presentation.main.MainActivity
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
+import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.signup.SignupActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +26,6 @@ class SigninActivity : BaseActivity<ActivitySigninBinding>(R.layout.activity_sig
     }
 
     private fun observeData() {
-        val errorHandler = ErrorHandler(this)
         observeFlowWithLifecycle(viewModel.uiState){
             when (it) {
                 is UiState.Loading -> {
@@ -38,7 +37,7 @@ class SigninActivity : BaseActivity<ActivitySigninBinding>(R.layout.activity_sig
                 }
                 is UiState.Error -> {
                     viewModel.setProgress(false)
-                    errorHandler.errorHandling(it.err)
+                    errorHandling(it.err)
                 }
                 else -> {
                     //do nothing

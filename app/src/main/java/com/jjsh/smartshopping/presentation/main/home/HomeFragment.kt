@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentHomeBinding
-import com.jjsh.smartshopping.presentation.ErrorHandler
 import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
-import com.jjsh.smartshopping.presentation.extension.shortToast
+import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun observeData() {
-        val errorHandler = ErrorHandler(requireContext())
         observeFlowWithLifecycle(viewModel.products) {
             when (it) {
                 is UiEvent.Success -> {
@@ -61,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     productAdapter.submitList(it.data.toMutableList())
                 }
                 is UiEvent.Error -> {
-                    errorHandler.errorHandling(it.err)
+                    requireContext().errorHandling(it.err)
                 }
             }
         }
