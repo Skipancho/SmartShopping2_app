@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : ViewModel() {
-    private val currentProductList = mutableListOf<Product>()
+    private var currentProductList = listOf<Product>()
     private var currentSearchText: String = ""
 
     private val _searchResult = MutableStateFlow<UiState<List<Product>>>(UiState.Init)
@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
     private var debounceJob : Job? = null
 
     val search: (String) -> Unit = {
-        currentProductList.clear()
+        currentProductList = listOf()
         currentSearchText = it
         searchProducts(Long.MAX_VALUE)
     }
@@ -42,6 +42,7 @@ class SearchViewModel @Inject constructor(
     }
 
     val onTextChange: (String) -> Unit = {
+        debounceJob?.cancel()
         if (it.isNotEmpty()){
             currentSearchText = it
             debounceSearch()
@@ -58,9 +59,9 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun debounceSearch(){
-        debounceJob?.cancel()
         debounceJob = viewModelScope.launch {
-            delay(500L)
+            delay(1000L)
+            currentProductList = listOf()
             searchProducts(Long.MAX_VALUE)
             _hasSearchViewFocus.value = false
         }
@@ -70,7 +71,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             productRepository.getProducts(productId = startProductId, keyword = currentSearchText)
                 .onSuccess {
-                    currentProductList.addAll(it)
+                    currentProductList += it
                     _searchResult.value = UiState.Success(currentProductList)
                 }.onFailure {
                     _searchResult.value = UiState.Error(it)
