@@ -5,10 +5,10 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySignupBinding
-import com.jjsh.smartshopping.presentation.ErrorHandler
 import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
+import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.shortToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +32,6 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
     }
 
     private fun observeData() {
-        val errorHandler = ErrorHandler(this)
         with(viewModel) {
             observeFlowWithLifecycle(isPasswordValidated()) {
                 binding.tilPasswordCheck.error =
@@ -50,7 +49,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
                         shortToast(getString(R.string.toast_msg_id_checked))
                     }
                     is UiEvent.Error -> {
-                        errorHandler.errorHandling(it.err)
+                        errorHandling(it.err)
                     }
                 }
                 viewModel.initUiState()
@@ -61,7 +60,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
                         shortToast(getString(R.string.toast_msg_nickname_checked))
                     }
                     is UiEvent.Error -> {
-                        errorHandler.errorHandling(it.err)
+                        errorHandling(it.err)
                     }
                 }
                 viewModel.initUiState()
@@ -81,7 +80,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
                     }
                     is UiState.Error -> {
                         viewModel.setProgress(false)
-                        errorHandler.errorHandling(it.err)
+                        errorHandling(it.err)
                     }
                 }
             }

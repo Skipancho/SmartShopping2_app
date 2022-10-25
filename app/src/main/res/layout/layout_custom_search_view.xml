@@ -18,7 +18,7 @@
             android:layout_marginStart="5dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_back_24"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon" />
 
         <EditText
             android:id="@+id/et_search"
@@ -26,7 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:padding="15dp" />
+            android:padding="15dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionSearch"/>
 
         <ImageButton
             android:id="@+id/ib_delete"
@@ -36,7 +39,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_close_24"
             android:visibility="gone"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon"  />
 
         <ImageButton
             android:id="@+id/ib_search"
@@ -45,7 +48,7 @@
             android:layout_marginEnd="5dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_search_24"
-            app:tint="@color/gray_828282" />
+            app:tint="@drawable/color_btn_icon"  />
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
