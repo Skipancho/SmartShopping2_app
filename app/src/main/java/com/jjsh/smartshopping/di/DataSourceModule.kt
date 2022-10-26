@@ -1,5 +1,7 @@
 package com.jjsh.smartshopping.di
 
+import com.jjsh.smartshopping.data.local.datasource.LocalDataSource
+import com.jjsh.smartshopping.data.local.datasource.LocalDataSourceImpl
 import com.jjsh.smartshopping.data.remote.datasource.RemoteDataSource
 import com.jjsh.smartshopping.data.remote.datasource.RemoteDataSourceImpl
 import dagger.Binds
@@ -16,4 +18,10 @@ abstract class DataSourceModule {
     abstract fun bindRemoteDataSource(
         remoteDataSourceImpl: RemoteDataSourceImpl
     ): RemoteDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindLocalDataSource(
+        localDataSourceImpl: LocalDataSourceImpl
+    ): LocalDataSource
 }
