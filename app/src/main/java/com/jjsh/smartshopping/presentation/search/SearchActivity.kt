@@ -43,5 +43,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
                 inputMethodManager.hideSoftInputFromWindow(binding.stvSearch.windowToken, 0)
             }
         }
+
+        observeFlowWithLifecycle(viewModel.currentSearchText){
+            binding.stvSearch.setText("")
+        }
     }
 }
