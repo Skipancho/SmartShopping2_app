@@ -50,7 +50,7 @@ class SearchViewModel @Inject constructor(
         searchProducts(Long.MAX_VALUE, it)
     }
 
-    val delete: () -> Unit = {
+    val onTextClear: () -> Unit = {
         _searchResult.value = UiState.Success(listOf())
     }
 
@@ -70,15 +70,6 @@ class SearchViewModel @Inject constructor(
         searchProducts(currentProductList.last().id, currentSearchText.value)
     }
 
-    private fun debounceSearch(keyword: String) {
-        debounceJob = viewModelScope.launch {
-            delay(1000L)
-            clearProductList()
-            searchProducts(Long.MAX_VALUE, keyword)
-            _hasSearchViewFocus.value = false
-        }
-    }
-
     fun searchProducts(startProductId: Long, keyword: String) {
         setSearchText(keyword)
         viewModelScope.launch {
@@ -91,6 +82,33 @@ class SearchViewModel @Inject constructor(
                 }.onFailure {
                     _searchResult.value = UiState.Error(it)
                 }
+        }
+    }
+
+    fun deleteSearchHistory(history: SearchHistory) {
+        viewModelScope.launch {
+            searchHistoryRepository.deleteSearchHistory(history)
+        }
+    }
+
+    fun setSearchText(text: String) {
+        _currentSearchText.value = text
+    }
+
+    fun clearProductList() {
+        currentProductList = listOf()
+    }
+
+    fun setMoveToBack(action: () -> Unit) {
+        _moveToBack = action
+    }
+
+    private fun debounceSearch(keyword: String) {
+        debounceJob = viewModelScope.launch {
+            delay(1000L)
+            clearProductList()
+            searchProducts(Long.MAX_VALUE, keyword)
+            _hasSearchViewFocus.value = false
         }
     }
 
@@ -117,23 +135,5 @@ class SearchViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun deleteSearchHistory(history: SearchHistory) {
-        viewModelScope.launch {
-            searchHistoryRepository.deleteSearchHistory(history)
-        }
-    }
-
-    fun setSearchText(text: String) {
-        _currentSearchText.value = text
-    }
-
-    fun clearProductList() {
-        currentProductList = listOf()
-    }
-
-    fun setMoveToBack(action: () -> Unit) {
-        _moveToBack = action
     }
 }

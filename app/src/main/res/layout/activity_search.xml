@@ -22,7 +22,7 @@
             app:hint="@{@string/hint_search}"
             app:layout_constraintTop_toTopOf="parent"
             app:onBackClick="@{viewModel.moveToBack}"
-            app:onDeleteClick="@{viewModel.delete}"
+            app:onDeleteClick="@{viewModel.onTextClear}"
             app:onFocusChange="@{viewModel.onFocusSearch}"
             app:onSearchClick="@{viewModel.search}"
             app:onTextChange="@{viewModel.onTextChange}" />
