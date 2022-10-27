@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.main
+package com.jjsh.smartshopping.presentation.ui.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

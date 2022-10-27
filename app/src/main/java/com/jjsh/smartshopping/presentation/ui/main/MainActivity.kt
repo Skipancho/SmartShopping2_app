@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.main
+package com.jjsh.smartshopping.presentation.ui.main
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,11 +10,11 @@ import com.jjsh.smartshopping.databinding.ActivityMainBinding
 import com.jjsh.smartshopping.presentation.adapter.ViewPagerAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.start
-import com.jjsh.smartshopping.presentation.main.cart.CartFragment
-import com.jjsh.smartshopping.presentation.main.chart.ChartFragment
-import com.jjsh.smartshopping.presentation.main.checklist.CheckListFragment
-import com.jjsh.smartshopping.presentation.main.home.HomeFragment
-import com.jjsh.smartshopping.presentation.mypage.MypageActivity
+import com.jjsh.smartshopping.presentation.ui.main.cart.CartFragment
+import com.jjsh.smartshopping.presentation.ui.main.chart.ChartFragment
+import com.jjsh.smartshopping.presentation.ui.main.checklist.CheckListFragment
+import com.jjsh.smartshopping.presentation.ui.main.home.HomeFragment
+import com.jjsh.smartshopping.presentation.ui.mypage.MypageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

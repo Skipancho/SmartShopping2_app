@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.jjsh.smartshopping.presentation.signin.SigninViewModel" />
+            type="com.jjsh.smartshopping.presentation.ui.signin.SigninViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.signin.SigninActivity">
+        tools:context=".presentation.ui.signin.SigninActivity">
 
         <ImageView
             android:id="@+id/iv_logo"

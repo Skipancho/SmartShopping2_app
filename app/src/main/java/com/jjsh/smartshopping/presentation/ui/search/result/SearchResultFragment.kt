@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.search.result
+package com.jjsh.smartshopping.presentation.ui.search.result
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,7 @@ import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
-import com.jjsh.smartshopping.presentation.search.SearchViewModel
+import com.jjsh.smartshopping.presentation.ui.search.SearchViewModel
 
 class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(R.layout.fragment_search_result) {
 

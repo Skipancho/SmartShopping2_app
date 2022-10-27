@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.jjsh.smartshopping.presentation.signup.SignupViewModel" />
+            type="com.jjsh.smartshopping.presentation.ui.signup.SignupViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.signup.SignupActivity">
+        tools:context=".presentation.ui.signup.SignupActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/abl_appbar_layout"

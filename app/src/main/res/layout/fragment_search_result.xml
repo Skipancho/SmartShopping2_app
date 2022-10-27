@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.search.result.SearchResultFragment">
+        tools:context=".presentation.ui.search.result.SearchResultFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"

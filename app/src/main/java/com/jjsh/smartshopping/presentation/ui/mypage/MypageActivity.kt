@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.mypage
+package com.jjsh.smartshopping.presentation.ui.mypage
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,7 +8,7 @@ import com.jjsh.smartshopping.databinding.ActivityMypageBinding
 import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
-import com.jjsh.smartshopping.presentation.signin.SigninActivity
+import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

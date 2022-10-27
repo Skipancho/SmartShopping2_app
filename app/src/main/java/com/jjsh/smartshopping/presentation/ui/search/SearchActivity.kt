@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.search
+package com.jjsh.smartshopping.presentation.ui.search
 
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
@@ -7,8 +7,8 @@ import androidx.fragment.app.commit
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySearchBinding
 import com.jjsh.smartshopping.presentation.base.BaseActivity
-import com.jjsh.smartshopping.presentation.search.history.SearchHistoryFragment
-import com.jjsh.smartshopping.presentation.search.result.SearchResultFragment
+import com.jjsh.smartshopping.presentation.ui.search.history.SearchHistoryFragment
+import com.jjsh.smartshopping.presentation.ui.search.result.SearchResultFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

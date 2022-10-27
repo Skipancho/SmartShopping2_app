@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.main.checklist
+package com.jjsh.smartshopping.presentation.ui.main.checklist
 
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentCheckListBinding
