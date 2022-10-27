@@ -47,7 +47,6 @@ class SearchViewModel @Inject constructor(
 
     val search: (String) -> Unit = {
         clearProductList()
-        setSearchText(it)
         searchProducts(Long.MAX_VALUE, it)
     }
 
@@ -58,7 +57,6 @@ class SearchViewModel @Inject constructor(
     val onTextChange: (String) -> Unit = {
         debounceJob?.cancel()
         if (it.isNotEmpty()) {
-            setSearchText(it)
             debounceSearch(it)
         }
     }
@@ -82,6 +80,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun searchProducts(startProductId: Long, keyword: String) {
+        setSearchText(keyword)
         viewModelScope.launch {
             productRepository.getProducts(productId = startProductId, keyword = keyword)
                 .onSuccess {
