@@ -1,16 +1,16 @@
-package com.jjsh.smartshopping.presentation.signin
+package com.jjsh.smartshopping.presentation.ui.signin
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySigninBinding
-import com.jjsh.smartshopping.presentation.main.MainActivity
+import com.jjsh.smartshopping.presentation.ui.main.MainActivity
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
-import com.jjsh.smartshopping.presentation.signup.SignupActivity
+import com.jjsh.smartshopping.presentation.ui.signup.SignupActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

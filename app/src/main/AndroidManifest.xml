@@ -18,16 +18,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.search.SearchActivity"
+            android:name=".presentation.ui.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.mypage.MypageActivity"
+            android:name=".presentation.ui.mypage.MypageActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.signup.SignupActivity"
+            android:name=".presentation.ui.signup.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.signin.SigninActivity"
+            android:name=".presentation.ui.signin.SigninActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.main.MainActivity"
+            android:name=".presentation.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

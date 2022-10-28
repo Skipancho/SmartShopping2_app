@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.mypage
+package com.jjsh.smartshopping.presentation.ui.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

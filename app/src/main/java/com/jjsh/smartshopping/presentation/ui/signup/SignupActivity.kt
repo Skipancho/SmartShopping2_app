@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.signup
+package com.jjsh.smartshopping.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.MenuItem

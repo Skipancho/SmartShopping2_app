@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.search.history
+package com.jjsh.smartshopping.presentation.ui.search.history
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,7 @@ import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.SearchHistoryAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
-import com.jjsh.smartshopping.presentation.search.SearchViewModel
+import com.jjsh.smartshopping.presentation.ui.search.SearchViewModel
 
 class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>(R.layout.fragment_search_history) {
 

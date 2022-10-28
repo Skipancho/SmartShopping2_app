@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.main.home
+package com.jjsh.smartshopping.presentation.ui.main.home
 
 import android.os.Bundle
 import android.view.View
@@ -12,7 +12,7 @@ import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
-import com.jjsh.smartshopping.presentation.search.SearchActivity
+import com.jjsh.smartshopping.presentation.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

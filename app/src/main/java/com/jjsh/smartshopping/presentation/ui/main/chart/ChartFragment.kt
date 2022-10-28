@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.main.chart
+package com.jjsh.smartshopping.presentation.ui.main.chart
 
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentChartBinding
