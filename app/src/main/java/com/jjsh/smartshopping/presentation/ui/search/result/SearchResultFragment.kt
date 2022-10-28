@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentSearchResultBinding
 import com.jjsh.smartshopping.presentation.UiState
@@ -16,22 +17,28 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(R.layout.
 
     private val viewModel by activityViewModels<SearchViewModel>()
     private val productAdapter by lazy { ProductAdapter() }
+    private val gridLayoutManager by lazy { GridLayoutManager(requireContext(), 2) }
+    private val linearLayoutManager by lazy { LinearLayoutManager(requireContext()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.viewModel = viewModel
         initView()
         observeData()
     }
 
     private fun initView() {
-        binding.rvSearchResult.adapter = productAdapter
-        binding.rvSearchResult.layoutManager = GridLayoutManager(requireContext(),2)
-        binding.rvSearchResult.itemAnimator = null
+        with(binding.rvSearchResult) {
+            adapter = productAdapter
+            itemAnimator = null
+            layoutManager = if (productAdapter.isGrid) gridLayoutManager else linearLayoutManager
+        }
     }
 
     private fun observeData() {
-        observeFlowWithLifecycle(viewModel.searchResult){
-            when(it){
+        observeFlowWithLifecycle(viewModel.searchResult) {
+            when (it) {
                 is UiState.Success -> {
                     productAdapter.submitList(it.data.toMutableList())
                 }
@@ -39,6 +46,18 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(R.layout.
                     requireContext().errorHandling(it.err)
                 }
                 else -> {}
+            }
+        }
+
+        observeFlowWithLifecycle(viewModel.isLayoutTypeGrid) {
+            if (productAdapter.isGrid != it) {
+                if (it) {
+                    productAdapter.setGrid(true)
+                    binding.rvSearchResult.layoutManager = gridLayoutManager
+                } else {
+                    productAdapter.setGrid(false)
+                    binding.rvSearchResult.layoutManager = linearLayoutManager
+                }
             }
         }
     }
