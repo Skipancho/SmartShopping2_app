@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_search) {
 
     private val viewModel by viewModels<SearchViewModel>()
-    private val historyFragment by lazy { SearchHistoryFragment() }
-    private val resultFragment by lazy { SearchResultFragment() }
+    private var historyFragment: SearchHistoryFragment? = null
+    private var resultFragment: SearchResultFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +31,43 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(R.layout.activity_sea
 
         observeFlowWithLifecycle(viewModel.hasSearchViewFocus) {
             if (it) {
-                supportFragmentManager.commit {
-                    replace(binding.flFragment.id, historyFragment)
-                }
+                showHistory()
             } else {
-                supportFragmentManager.commit {
-                    replace(binding.flFragment.id, resultFragment)
-                }
+                showResult()
                 if (binding.stvSearch.findFocus() != null)
                     binding.stvSearch.findFocus().clearFocus()
                 inputMethodManager.hideSoftInputFromWindow(binding.stvSearch.windowToken, 0)
             }
         }
 
-        observeFlowWithLifecycle(viewModel.currentSearchText){
+        observeFlowWithLifecycle(viewModel.currentSearchText) {
             binding.stvSearch.setText("")
+        }
+    }
+
+    private fun showHistory() {
+        if (historyFragment == null){
+            historyFragment = SearchHistoryFragment()
+            supportFragmentManager.commit {
+                add(binding.flFragment.id,historyFragment!!)
+            }
+        }
+        supportFragmentManager.commit {
+            historyFragment?.let { show(it) }
+            resultFragment?.let { hide(it) }
+        }
+    }
+
+    private fun showResult() {
+        if (resultFragment == null){
+            resultFragment = SearchResultFragment()
+            supportFragmentManager.commit {
+                add(binding.flFragment.id,resultFragment!!)
+            }
+        }
+        supportFragmentManager.commit {
+            historyFragment?.let { hide(it) }
+            resultFragment?.let { show(it) }
         }
     }
 }
