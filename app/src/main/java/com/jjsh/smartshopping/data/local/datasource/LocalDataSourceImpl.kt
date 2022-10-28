@@ -33,10 +33,10 @@ class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteSearchHistory(historyDto: SearchHistoryDto): Result<Unit> {
+    override suspend fun deleteSearchHistory(vararg historyDto: SearchHistoryDto): Result<Unit> {
         return withContext(ioDispatcher){
             runCatching {
-                searchHistoryDao.deleteHistory(historyDto)
+                searchHistoryDao.deleteHistory(*historyDto)
             }
         }
     }

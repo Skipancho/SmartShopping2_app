@@ -2,6 +2,7 @@ package com.jjsh.smartshopping.data.repository
 
 import com.jjsh.smartshopping.data.local.datasource.LocalDataSource
 import com.jjsh.smartshopping.data.local.dto.SearchHistoryDto
+import com.jjsh.smartshopping.data.local.dto.toDto
 import com.jjsh.smartshopping.domain.model.SearchHistory
 import com.jjsh.smartshopping.domain.repository.SearchHistoryRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,11 +14,12 @@ class SearchHistoryRepositoryImpl @Inject constructor(
 ) : SearchHistoryRepository {
 
     override suspend fun insertSearchHistory(history: SearchHistory): Result<Unit> {
-        return localDataSource.insertSearchHistory(SearchHistoryDto(history))
+        return localDataSource.insertSearchHistory(history.toDto())
     }
 
-    override suspend fun deleteSearchHistory(history: SearchHistory): Result<Unit> {
-        return localDataSource.deleteSearchHistory(SearchHistoryDto(history))
+    override suspend fun deleteSearchHistory(vararg history: SearchHistory): Result<Unit> {
+        val histories = history.map { it.toDto() }.toTypedArray()
+        return localDataSource.deleteSearchHistory(*histories)
     }
 
     override fun getSearchHistory(): Flow<Result<List<SearchHistory>>> {

@@ -10,7 +10,7 @@ data class SearchHistoryDto(
     @PrimaryKey(autoGenerate = false) val text: String,
     val time : Long
 ) {
-    constructor(searchHistory: SearchHistory) : this(searchHistory.text, Date().time)
-
     fun toSearchHistory(): SearchHistory = SearchHistory(text)
 }
+
+fun SearchHistory.toDto() : SearchHistoryDto = SearchHistoryDto(text,Date().time)
