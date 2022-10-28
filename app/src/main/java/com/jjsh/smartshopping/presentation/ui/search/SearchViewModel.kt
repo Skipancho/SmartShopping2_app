@@ -94,6 +94,16 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun deleteAllSearchHistory() {
+        viewModelScope.launch {
+            searchHistory.value.let {
+                if (it is UiState.Success){
+                    searchHistoryRepository.deleteSearchHistory(*it.data.toTypedArray())
+                }
+            }
+        }
+    }
+
     fun setSearchText(text: String) {
         _currentSearchText.value = text
     }

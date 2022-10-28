@@ -32,6 +32,8 @@ class SearchHistoryFragment : BaseFragment<FragmentSearchHistoryBinding>(R.layou
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+
         initView()
         observeData()
     }
