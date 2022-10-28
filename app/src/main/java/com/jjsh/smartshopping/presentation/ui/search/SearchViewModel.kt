@@ -36,6 +36,9 @@ class SearchViewModel @Inject constructor(
     private val _searchHistory = MutableStateFlow<UiState<List<SearchHistory>>>(UiState.Init)
     val searchHistory: StateFlow<UiState<List<SearchHistory>>> get() = _searchHistory
 
+    private val _isLayoutTypeGrid = MutableStateFlow<Boolean>(true)
+    val isLayoutTypeGrid: StateFlow<Boolean> get() = _isLayoutTypeGrid
+
     private var _moveToBack: () -> Unit = { }
     val moveToBack: () -> Unit get() = _moveToBack
 
@@ -101,6 +104,10 @@ class SearchViewModel @Inject constructor(
 
     fun setMoveToBack(action: () -> Unit) {
         _moveToBack = action
+    }
+
+    fun setLayoutType(isGrid: Boolean) {
+        _isLayoutTypeGrid.value = isGrid
     }
 
     private fun debounceSearch(keyword: String) {
