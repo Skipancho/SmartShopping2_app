@@ -10,7 +10,7 @@ interface SearchHistoryDao {
     suspend fun insertHistory(history: SearchHistoryDto)
 
     @Delete
-    suspend fun deleteHistory(history: SearchHistoryDto)
+    suspend fun deleteHistory(vararg history: SearchHistoryDto)
 
     @Query("SELECT * FROM `SEARCH_HISTORY` ORDER BY `time` DESC")
     fun getHistory(): Flow<List<SearchHistoryDto>>

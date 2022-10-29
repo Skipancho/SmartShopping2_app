@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDataSource {
     fun getSearchHistory(): Flow<Result<List<SearchHistoryDto>>>
     suspend fun insertSearchHistory(historyDto: SearchHistoryDto): Result<Unit>
-    suspend fun deleteSearchHistory(historyDto: SearchHistoryDto): Result<Unit>
+    suspend fun deleteSearchHistory(vararg historyDto: SearchHistoryDto): Result<Unit>
 }
