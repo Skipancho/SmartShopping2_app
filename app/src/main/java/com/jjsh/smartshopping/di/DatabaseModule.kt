@@ -3,6 +3,7 @@ package com.jjsh.smartshopping.di
 import android.content.Context
 import androidx.room.Room
 import com.jjsh.smartshopping.data.local.SmartShoppingDB
+import com.jjsh.smartshopping.data.local.dao.CartItemDao
 import com.jjsh.smartshopping.data.local.dao.SearchHistoryDao
 import dagger.Module
 import dagger.Provides
@@ -29,4 +30,10 @@ class DatabaseModule {
     fun provideSearchHistoryDao(
         database: SmartShoppingDB
     ): SearchHistoryDao = database.searchHistoryDao()
+
+    @Provides
+    @Singleton
+    fun provideCartItemDao(
+        database: SmartShoppingDB
+    ): CartItemDao = database.cartItemDao()
 }
