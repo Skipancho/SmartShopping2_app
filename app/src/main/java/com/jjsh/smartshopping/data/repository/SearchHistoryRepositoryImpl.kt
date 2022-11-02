@@ -1,7 +1,6 @@
 package com.jjsh.smartshopping.data.repository
 
 import com.jjsh.smartshopping.data.local.datasource.LocalDataSource
-import com.jjsh.smartshopping.data.local.dto.SearchHistoryDto
 import com.jjsh.smartshopping.data.local.dto.toDto
 import com.jjsh.smartshopping.domain.model.SearchHistory
 import com.jjsh.smartshopping.domain.repository.SearchHistoryRepository
