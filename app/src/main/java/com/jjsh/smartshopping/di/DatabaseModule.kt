@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.jjsh.smartshopping.data.local.SmartShoppingDB
 import com.jjsh.smartshopping.data.local.dao.CartItemDao
+import com.jjsh.smartshopping.data.local.dao.CheckItemDao
 import com.jjsh.smartshopping.data.local.dao.SearchHistoryDao
 import dagger.Module
 import dagger.Provides
@@ -36,4 +37,10 @@ class DatabaseModule {
     fun provideCartItemDao(
         database: SmartShoppingDB
     ): CartItemDao = database.cartItemDao()
+
+    @Provides
+    @Singleton
+    fun provideCheckItemDao(
+        database: SmartShoppingDB
+    ): CheckItemDao = database.checkItemDao()
 }
