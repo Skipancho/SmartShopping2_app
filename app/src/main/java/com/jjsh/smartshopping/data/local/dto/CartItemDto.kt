@@ -18,8 +18,9 @@ data class CartItemDto(
     val isChecked: Boolean,
     val time: Long
 ) {
-    fun toCartItem(): CartItem =
-        CartItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked)
+    fun toCartItem(): CartItem = CartItem(
+        id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
+    )
 }
 
 fun CartItem.toDto(userCode: Long): CartItemDto = CartItemDto(
