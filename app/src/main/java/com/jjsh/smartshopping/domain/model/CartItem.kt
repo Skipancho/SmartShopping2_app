@@ -6,11 +6,14 @@ data class CartItem(
     val name: String,
     val nPrice: Int,
     val sPrice: Int,
-    val amount: Int,
+    var amount: Int,
     val thumbnailUrl: String,
     val isChecked: Boolean = true
-){
-    fun setAmount(amount: Int) : CartItem =
+) {
+    fun setAmount(amount: Int): CartItem =
+        CartItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked)
+
+    fun setChecked(isChecked: Boolean): CartItem =
         CartItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked)
 }
 
