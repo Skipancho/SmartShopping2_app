@@ -1,7 +1,7 @@
 package com.jjsh.smartshopping.domain.model
 
 data class CheckItem(
-    val id: Long = -1,
+    val id: Long = 0L,
     val productId: Long,
     val name: String,
     val nPrice: Int,
@@ -20,3 +20,12 @@ data class CheckItem(
     fun setInCart(isInCart: Boolean): CheckItem =
         CheckItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, isInCart)
 }
+
+fun Product.toCheckItem(amount: Int) : CheckItem = CheckItem(
+    productId = id,
+    name = name,
+    nPrice = nPrice,
+    sPrice = sPrice,
+    amount = amount,
+    thumbnailUrl = thumbnailPath
+)
