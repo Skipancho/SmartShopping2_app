@@ -3,6 +3,7 @@
 
     <!--format-->
     <string name="price_format">%,1d원</string>
+    <string name="add_btn_format">%d개 담기</string>
     <string name="search_result_format">\"%1$s\"의 검색 결과</string>
 
     <!--toast msg-->
