@@ -24,7 +24,8 @@ internal class RemoteDataSourceImplTest {
         token = "testToken",
         refreshToken = "testRefreshToken",
         nickName = "testNickName",
-        userCode = 1L
+        userCode = 1L,
+        userName = "testUserName"
     )
 
     private val testProductResponses = listOf<ProductResponse>(
