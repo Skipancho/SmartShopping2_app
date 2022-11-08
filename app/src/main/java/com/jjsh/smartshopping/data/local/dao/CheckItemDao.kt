@@ -12,8 +12,8 @@ interface CheckItemDao {
     @Delete
     fun deleteItem(vararg itemDto: CheckItemDto)
 
-    @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode` = (:userCode) AND `id` = (:itemId)")
-    suspend fun getItem(userCode: Long, itemId: Long): CheckItemDto
+    @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode` = (:userCode) AND `productId` = (:productId)")
+    suspend fun getItem(userCode: Long, productId: Long): CheckItemDto
 
     @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode`LIKE (:userCode)  ORDER BY `time` DESC")
     fun getItems(userCode: Long): Flow<List<CheckItemDto>>
