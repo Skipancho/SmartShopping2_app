@@ -27,9 +27,10 @@ class CartItemRepositoryImpl @Inject constructor(
 
     override suspend fun insertCartItem(vararg cartItem: CartItem): Result<Unit> {
         val items = cartItem.map {
-            val defaultItem = localDataSource.getCartItem(auth.userCode, it.id).getOrNull()
+            val defaultItem = localDataSource.getCartItem(auth.userCode, it.productId).getOrNull()
             val defaultAmount = defaultItem?.amount ?: 0
-            it.setAmount(defaultAmount + it.amount).toDto(auth.userCode)
+            val defaultId = defaultItem?.id ?: 0
+            it.setAmount(defaultAmount + it.amount).toDto(auth.userCode).setId(defaultId)
         }.toTypedArray()
         return localDataSource.insertCartItem(*items)
     }
