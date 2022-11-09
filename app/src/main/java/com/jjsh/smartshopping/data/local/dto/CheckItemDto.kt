@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "CHECK_ITEM")
 data class CheckItemDto(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val productId: Long,
     val userCode: Long,
     val name: String,
@@ -20,6 +20,10 @@ data class CheckItemDto(
 ) {
     fun toCheckItem(): CheckItem = CheckItem(
         id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
+    )
+
+    fun setId(id: Long) = CheckItemDto(
+        id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, time
     )
 }
 

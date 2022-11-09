@@ -25,9 +25,10 @@ class CheckItemRepositoryImpl @Inject constructor(
 
     override suspend fun insertCheckItem(vararg checkItem: CheckItem): Result<Unit> {
         val items = checkItem.map {
-            val defaultItem = localDataSource.getCheckItem(auth.userCode, it.id).getOrNull()
+            val defaultItem = localDataSource.getCheckItem(auth.userCode, it.productId).getOrNull()
             val defaultAmount = defaultItem?.amount ?: 0
-            it.setAmount(defaultAmount + it.amount).toDto(auth.userCode)
+            val defaultId = defaultItem?.id ?: 0
+            it.setAmount(defaultAmount + it.amount).toDto(auth.userCode).setId(defaultId)
         }.toTypedArray()
         return localDataSource.insertCheckItem(*items)
     }
