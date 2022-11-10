@@ -147,6 +147,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:text='@{checkItem.amount + "" }'
             app:layout_constraintBottom_toBottomOf="@id/btn_minus"
             app:layout_constraintEnd_toStartOf="@id/btn_plus"
             app:layout_constraintTop_toTopOf="@id/btn_minus"
