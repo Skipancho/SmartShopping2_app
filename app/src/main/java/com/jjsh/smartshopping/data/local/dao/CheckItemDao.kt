@@ -15,6 +15,6 @@ interface CheckItemDao {
     @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode` = (:userCode) AND `productId` = (:productId)")
     suspend fun getItem(userCode: Long, productId: Long): CheckItemDto
 
-    @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode`LIKE (:userCode)  ORDER BY `id` DESC")
+    @Query("SELECT * FROM `CHECK_ITEM` WHERE `userCode`LIKE (:userCode)  ORDER BY `id` ASC")
     fun getItems(userCode: Long): Flow<List<CheckItemDto>>
 }
