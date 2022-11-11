@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.customview
+package com.jjsh.smartshopping.presentation.custom
 
 import android.content.Context
 import android.text.Editable
