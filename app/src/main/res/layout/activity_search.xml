@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.search.SearchActivity">
 
-        <com.jjsh.smartshopping.presentation.customview.SearchTextView
+        <com.jjsh.smartshopping.presentation.custom.SearchTextView
             android:id="@+id/stv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
