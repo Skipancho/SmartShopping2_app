@@ -43,8 +43,8 @@ class CheckListAdapter(
             binding.ibDelete.setOnClickListener {
                 deleteCheckItem(item)
             }
-            binding.cbIsChecked.setOnCheckedChangeListener { compoundButton, b ->
-                if (item.isChecked != b) item.isChecked = b
+            binding.cbIsChecked.setOnClickListener {
+                item.isChecked = !item.isChecked
                 updateCheckItem(item, adapterPosition)
             }
         }
