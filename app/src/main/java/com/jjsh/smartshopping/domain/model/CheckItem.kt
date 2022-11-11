@@ -8,16 +8,13 @@ data class CheckItem(
     val sPrice: Int,
     var amount: Int,
     val thumbnailUrl: String,
-    val isChecked: Boolean = true,
+    var isChecked: Boolean = true,
     val isInCart: Boolean = false
 ) {
     val sale = (100 * (nPrice - sPrice)) / nPrice
     val totalPrice =  amount * sPrice
 
     fun setAmount(amount: Int): CheckItem =
-        CheckItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, isInCart)
-
-    fun setChecked(isChecked: Boolean): CheckItem =
         CheckItem(id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, isInCart)
 
     fun setInCart(isInCart: Boolean): CheckItem =

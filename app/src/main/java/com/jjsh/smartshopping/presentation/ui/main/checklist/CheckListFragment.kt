@@ -18,17 +18,19 @@ class CheckListFragment : BaseFragment<FragmentCheckListBinding>(R.layout.fragme
 
     private val viewModel by viewModels<CheckListViewModel>()
     private val checkListAdapter by lazy {
-        CheckListAdapter { item ->
-            if (item.amount > 0)
-                viewModel.updateCheckItem(item)
-            else {
+        CheckListAdapter(
+            _updateCheckItem = { item ->
+                if (item.amount > 0)
+                    viewModel.updateCheckItem(item)
+            },
+            deleteCheckItem = { item ->
                 AlertDialog.Builder(requireContext())
                     .setMessage("삭제 하시겠습니까?")
                     .setPositiveButton("확인") { _, _ -> viewModel.deleteCheckItem(item) }
-                    .setNegativeButton("취소") { d, _ -> d.dismiss() }
+                    .setNegativeButton("취소") { d , _ -> d.dismiss() }
                     .show()
             }
-        }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
