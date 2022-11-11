@@ -15,18 +15,17 @@ data class CheckItemDto(
     val sPrice: Int,
     val amount: Int,
     val thumbnailUrl: String,
-    val isChecked: Boolean,
-    val time: Long
+    val isChecked: Boolean
 ) {
     fun toCheckItem(): CheckItem = CheckItem(
         id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
     )
 
     fun setId(id: Long) = CheckItemDto(
-        id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, time
+        id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
     )
 }
 
 fun CheckItem.toDto(userCode: Long): CheckItemDto = CheckItemDto(
-    id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, Date().time
+    id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
 )
