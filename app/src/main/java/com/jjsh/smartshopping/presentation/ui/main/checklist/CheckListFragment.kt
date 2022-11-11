@@ -10,6 +10,8 @@ import com.jjsh.smartshopping.databinding.FragmentCheckListBinding
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.CheckListAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
+import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
+import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,6 +50,7 @@ class CheckListFragment : BaseFragment<FragmentCheckListBinding>(R.layout.fragme
         with(binding.rvCheckList) {
             adapter = checkListAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(VerticalItemDecoration(bottom = 16.dpToPx()))
         }
     }
 
