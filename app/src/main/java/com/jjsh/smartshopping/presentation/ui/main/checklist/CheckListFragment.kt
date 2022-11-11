@@ -27,9 +27,9 @@ class CheckListFragment : BaseFragment<FragmentCheckListBinding>(R.layout.fragme
             },
             deleteCheckItem = { item ->
                 AlertDialog.Builder(requireContext())
-                    .setMessage("삭제 하시겠습니까?")
-                    .setPositiveButton("확인") { _, _ -> viewModel.deleteCheckItem(item) }
-                    .setNegativeButton("취소") { d , _ -> d.dismiss() }
+                    .setMessage(getString(R.string.text_do_you_wanna_delete))
+                    .setPositiveButton(getString(R.string.text_yes)) { _, _ -> viewModel.deleteCheckItem(item) }
+                    .setNegativeButton(getString(R.string.text_no)) { d, _ -> d.dismiss() }
                     .show()
             }
         )
@@ -66,6 +66,16 @@ class CheckListFragment : BaseFragment<FragmentCheckListBinding>(R.layout.fragme
                 else -> {
 
                 }
+            }
+        }
+
+        observeFlowWithLifecycle(viewModel.deleteCheckedItems) {
+            if (it){
+                AlertDialog.Builder(requireContext())
+                    .setMessage(getString(R.string.text_do_you_wanna_delete))
+                    .setPositiveButton(getString(R.string.text_yes)) { _, _ -> viewModel.deleteAllCheckedItems() }
+                    .setNegativeButton(getString(R.string.text_no)) { d , _ -> d.dismiss() }
+                    .show()
             }
         }
     }

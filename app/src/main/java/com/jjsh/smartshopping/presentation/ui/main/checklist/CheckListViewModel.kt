@@ -19,7 +19,10 @@ class CheckListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _checkList = MutableStateFlow<UiState<List<CheckItem>>>(UiState.Init)
-    val checkList : StateFlow<UiState<List<CheckItem>>> get() = _checkList
+    val checkList: StateFlow<UiState<List<CheckItem>>> get() = _checkList
+
+    private val _deleteCheckedItems = MutableStateFlow(false)
+    val deleteCheckedItems: StateFlow<Boolean> get() = _deleteCheckedItems
 
     fun getCheckList() {
         viewModelScope.launch {
@@ -33,9 +36,9 @@ class CheckListViewModel @Inject constructor(
         }
     }
 
-    fun updateCheckItem(checkItem: CheckItem) {
+    fun updateCheckItem(vararg checkItem: CheckItem) {
         viewModelScope.launch {
-            checkItemRepository.updateCheckItem(checkItem)
+            checkItemRepository.updateCheckItem(*checkItem)
                 .onSuccess {
                     Timber.d("update success")
                 }.onFailure {
@@ -44,14 +47,35 @@ class CheckListViewModel @Inject constructor(
         }
     }
 
-    fun deleteCheckItem(checkItem: CheckItem) {
+    fun deleteCheckItem(vararg checkItem: CheckItem) {
         viewModelScope.launch {
-            checkItemRepository.deleteCheckItem(checkItem)
+            checkItemRepository.deleteCheckItem(*checkItem)
                 .onSuccess {
                     Timber.d("delete success")
                 }.onFailure {
                     Timber.e("delete failure")
                 }
+        }
+    }
+
+    fun checkAllItems() {
+        val state = checkList.value
+        if (state is UiState.Success) {
+            val items = state.data.map { it.setChecked(true) }.toTypedArray()
+            updateCheckItem(*items)
+        }
+    }
+
+    fun startDeleteCheckedItems() {
+        _deleteCheckedItems.value = true
+    }
+
+    fun deleteAllCheckedItems() {
+        _deleteCheckedItems.value = false
+        val state = checkList.value
+        if (state is UiState.Success) {
+            val items = state.data.filter { it.isChecked }.toTypedArray()
+            deleteCheckItem(*items)
         }
     }
 }
