@@ -15,18 +15,17 @@ data class CartItemDto(
     val sPrice: Int,
     val amount: Int,
     val thumbnailUrl: String,
-    val isChecked: Boolean,
-    val time: Long
+    val isChecked: Boolean
 ) {
     fun toCartItem() = CartItem(
         id, productId, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
     )
 
     fun setId(id: Long) = CartItemDto(
-        id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, time
+        id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
     )
 }
 
 fun CartItem.toDto(userCode: Long): CartItemDto = CartItemDto(
-    id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked, Date().time
+    id, productId, userCode, name, nPrice, sPrice, amount, thumbnailUrl, isChecked
 )
