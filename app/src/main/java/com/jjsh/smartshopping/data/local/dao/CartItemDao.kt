@@ -15,6 +15,6 @@ interface CartItemDao {
     @Query("SELECT * FROM `CART_ITEM` WHERE `userCode` = (:userCode) AND `productId` = (:productId)")
     suspend fun getItem(userCode: Long, productId: Long): CartItemDto
 
-    @Query("SELECT * FROM `CART_ITEM` WHERE `userCode`LIKE (:userCode)  ORDER BY `time` DESC")
+    @Query("SELECT * FROM `CART_ITEM` WHERE `userCode`LIKE (:userCode)  ORDER BY `id` ASC")
     fun getItems(userCode: Long): Flow<List<CartItemDto>>
 }
