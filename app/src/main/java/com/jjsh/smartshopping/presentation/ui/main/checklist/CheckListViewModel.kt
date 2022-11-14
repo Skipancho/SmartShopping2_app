@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjsh.smartshopping.domain.model.CheckItem
 import com.jjsh.smartshopping.domain.repository.CheckItemRepository
+import com.jjsh.smartshopping.domain.usecase.GetCheckItemsUseCase
 import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CheckListViewModel @Inject constructor(
-    private val checkItemRepository: CheckItemRepository
+    private val checkItemRepository: CheckItemRepository,
+    private val getCheckItemsUseCase: GetCheckItemsUseCase
 ) : ViewModel() {
 
     private val _checkList = MutableStateFlow<UiState<List<CheckItem>>>(UiState.Init)
@@ -26,7 +28,7 @@ class CheckListViewModel @Inject constructor(
 
     fun getCheckList() {
         viewModelScope.launch {
-            checkItemRepository.getCheckItems().collectLatest { result ->
+            getCheckItemsUseCase().collectLatest { result ->
                 result.onSuccess {
                     _checkList.value = UiState.Success(it)
                 }.onFailure {
