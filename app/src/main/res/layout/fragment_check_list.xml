@@ -9,16 +9,45 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray_eceff1"
         tools:context=".presentation.ui.main.checklist.CheckListFragment">
 
+        <TextView
+            android:id="@+id/tv_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> viewModel.checkAllItems()}"
+            android:text="@string/text_check_all"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_check_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> viewModel.startDeleteCheckedItems()}"
+            android:text="@string/text_check_item_delete"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_check_all"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_check_all" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_check_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_check_all"
             tools:listitem="@layout/item_checklist" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
