@@ -8,7 +8,7 @@ data class CartItem(
     val sPrice: Int,
     var amount: Int,
     val thumbnailUrl: String,
-    val isChecked: Boolean = false,
+    var isChecked: Boolean = false,
     val inCheckList: Boolean = true
 ) {
     val sale get() = (100 * (nPrice - sPrice)) / nPrice
