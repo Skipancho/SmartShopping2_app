@@ -20,4 +20,9 @@ interface ProductService {
     suspend fun getProduct(
         @Path("id") id: Long
     ): ApiResponse<ProductResponse>
+
+    @GET("/api/v1/product/{barcode}")
+    suspend fun findProductByBarcode(
+        @Path("barcode") barcode: Long
+    ): ApiResponse<ProductResponse>
 }

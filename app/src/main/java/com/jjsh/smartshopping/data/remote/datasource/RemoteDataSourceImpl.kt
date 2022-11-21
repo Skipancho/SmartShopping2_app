@@ -61,6 +61,16 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse> {
+        return withContext(ioDispatcher){
+            runCatching {
+                val response = productService.findProductByBarcode(barcode)
+                response.successOrThrow()
+                response.getOrThrow(ErrorException.ProductException)
+            }
+        }
+    }
+
     override suspend fun getProducts(
         productId: Long,
         categoryId: Int?,
