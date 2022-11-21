@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.ui.registration
+package com.jjsh.smartshopping.presentation.ui.registration.checklist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

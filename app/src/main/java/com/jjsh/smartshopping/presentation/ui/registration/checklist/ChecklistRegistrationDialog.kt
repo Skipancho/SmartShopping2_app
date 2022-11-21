@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.presentation.ui.registration
+package com.jjsh.smartshopping.presentation.ui.registration.checklist
 
 import android.os.Bundle
 import android.view.LayoutInflater
