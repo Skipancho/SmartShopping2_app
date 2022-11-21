@@ -14,7 +14,11 @@ interface ProductRepository {
         productId: Long
     ): Result<Product>
 
-    companion object{
+    suspend fun findProductByBarcode(
+        barcode: Long
+    ): Result<Product>
+
+    companion object {
         const val NEXT = "next"
         const val PREV = "prev"
     }
