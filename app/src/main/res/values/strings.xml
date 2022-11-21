@@ -35,4 +35,6 @@
     <string name="text_do_you_wanna_delete">삭제 하시겠습니까?</string>
     <string name="text_yes">확인</string>
     <string name="text_no">취소</string>
+    <string name="text_add_to_cart">장바구니에 상품 담기</string>
+    <string name="text_purchase_complete">구매 완료</string>
 </resources>
