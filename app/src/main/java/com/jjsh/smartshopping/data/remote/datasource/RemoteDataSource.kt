@@ -18,6 +18,8 @@ interface RemoteDataSource {
 
     suspend fun getProduct(id: Long): Result<ProductResponse>
 
+    suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse>
+
     suspend fun getProducts(
         productId: Long,
         categoryId: Int?,
