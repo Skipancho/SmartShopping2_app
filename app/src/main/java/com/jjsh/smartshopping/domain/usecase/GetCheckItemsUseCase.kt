@@ -3,15 +3,13 @@ package com.jjsh.smartshopping.domain.usecase
 import com.jjsh.smartshopping.domain.model.CheckItem
 import com.jjsh.smartshopping.domain.repository.CartItemRepository
 import com.jjsh.smartshopping.domain.repository.CheckItemRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class GetCheckItemsUseCase @Inject constructor(
     private val cartItemRepository: CartItemRepository,
-    private val checkItemRepository: CheckItemRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val checkItemRepository: CheckItemRepository
 ) {
     operator fun invoke(): Flow<Result<List<CheckItem>>> {
         return combine(
@@ -35,6 +33,6 @@ class GetCheckItemsUseCase @Inject constructor(
             )
         }.catch {
             emit(Result.failure(it))
-        }.flowOn(defaultDispatcher)
+        }.flowOn(Dispatchers.Default)
     }
 }
