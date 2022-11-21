@@ -24,4 +24,8 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getProductItem(productId: Long): Result<Product> {
         return remoteDataSource.getProduct(productId).mapCatching { it.toProduct() }
     }
+
+    override suspend fun findProductByBarcode(barcode: Long): Result<Product> {
+        return remoteDataSource.findProductByBarcode(barcode).mapCatching { it.toProduct() }
+    }
 }
