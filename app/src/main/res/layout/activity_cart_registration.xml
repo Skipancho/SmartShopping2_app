@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jjsh.smartshopping.presentation.ui.registration.cart.CartRegistrationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.registration.cart.CartRegistrationActivity">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl_appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mtb_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="장바구니 추가"
+                app:titleCentered="true"
+                app:titleTextColor="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.journeyapps.barcodescanner.DecoratedBarcodeView
+            android:id="@+id/bv_barcode_scanner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@id/abl_appbar_layout"/>
+
+        <TextView
+            android:id="@+id/tv_cur_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/bv_barcode_scanner"
+            android:text="@{viewModel.productToShow.name.toString()}"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_cur_product_name"
+            android:layout_marginHorizontal="16dp"
+            android:text="장바구니 추가"
+            android:onClick="@{() -> viewModel.addProductToCart()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
