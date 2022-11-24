@@ -54,9 +54,6 @@ class CartRegistrationActivity :
     private fun observeCurrentProduct() {
         observeFlowWithLifecycle(viewModel.currentProduct) {
             when (it) {
-                is UiState.Success -> {
-                    viewModel.setShowingProduct(it.data)
-                }
                 is UiState.Error -> {
                     errorHandling(it.err)
                 }
