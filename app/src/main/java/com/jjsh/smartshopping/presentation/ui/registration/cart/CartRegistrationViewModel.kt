@@ -33,8 +33,8 @@ class CartRegistrationViewModel @Inject constructor(
     private val _addCartItemEvent = MutableSharedFlow<UiEvent<String>>()
     val addCartItemEvent : SharedFlow<UiEvent<String>> get() = _addCartItemEvent
 
-    private val _productToShow = MutableLiveData<Product?>()
-    val productToShow : LiveData<Product?> get() = _productToShow
+    private val _productToShow = MutableLiveData<Product>(Product.nullProduct)
+    val productToShow : LiveData<Product> get() = _productToShow
 
     fun setCurrentBarcode(barcodeResult : String){
         runCatching {
@@ -46,7 +46,7 @@ class CartRegistrationViewModel @Inject constructor(
 
     private fun initCurrentBarcode(){
         _currentBarcode.value = 0L
-        _productToShow.value = null
+        _productToShow.value = Product.nullProduct
     }
 
     fun findProductByBarcode(barcode : Long){
@@ -54,18 +54,17 @@ class CartRegistrationViewModel @Inject constructor(
             productRepository.findProductByBarcode(barcode)
                 .onSuccess {
                     _currentProduct.value = UiState.Success(it)
+                    _productToShow.value = it
+
                 }.onFailure {
                     _currentProduct.value = UiState.Error(it)
                 }
         }
     }
 
-    fun setShowingProduct(product: Product) {
-        _productToShow.value = product
-    }
-
     fun addProductToCart() {
         val product = productToShow.value ?: return
+        if (product == Product.nullProduct) return
         viewModelScope.launch {
             cartItemRepository.insertCartItem(product.toCartItem(1))
                 .onSuccess {
