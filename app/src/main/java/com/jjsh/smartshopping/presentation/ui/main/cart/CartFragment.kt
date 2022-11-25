@@ -12,6 +12,8 @@ import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
+import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.ui.registration.cart.CartRegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +38,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
 
         initView()
         observeData()
+
+        viewModel.getCartItems()
     }
 
     private fun initView() {
@@ -43,6 +47,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
             adapter = cartAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(VerticalItemDecoration(bottom = 16.dpToPx()))
+        }
+
+        binding.btnAddToCart.setOnClickListener {
+           // todo. 수정 필요
+            requireContext().start<CartRegistrationActivity>()
         }
     }
 
