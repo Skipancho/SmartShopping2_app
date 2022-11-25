@@ -26,11 +26,15 @@ class CheckListViewModel @Inject constructor(
     private val _deleteCheckedItems = MutableStateFlow(false)
     val deleteCheckedItems: StateFlow<Boolean> get() = _deleteCheckedItems
 
+    private val _totalPrice = MutableStateFlow(0)
+    val totalPrice : StateFlow<Int> get() = _totalPrice
+
     fun getCheckList() {
         viewModelScope.launch {
             getCheckItemsUseCase().collectLatest { result ->
                 result.onSuccess {
                     _checkList.value = UiState.Success(it)
+                    _totalPrice.value = it.sumOf { item -> item.totalPrice }
                 }.onFailure {
                     _checkList.value = UiState.Error(it)
                 }

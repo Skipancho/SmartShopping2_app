@@ -9,7 +9,9 @@ import com.jjsh.smartshopping.databinding.ItemProductGridBinding
 import com.jjsh.smartshopping.databinding.ItemProductLinearBinding
 import com.jjsh.smartshopping.domain.model.Product
 
-class ProductAdapter : ListAdapter<Product, RecyclerView.ViewHolder>(
+class ProductAdapter(
+    private val onClickItem: (Long) -> Unit = {}
+) : ListAdapter<Product, RecyclerView.ViewHolder>(
     ItemDiffCallBack<Product>({ old, new -> old.id == new.id })
 ) {
     private var _isGrid: Boolean = true
@@ -21,37 +23,41 @@ class ProductAdapter : ListAdapter<Product, RecyclerView.ViewHolder>(
     }
 
     class ProductGridViewHolder(
-        private val binding: ItemProductGridBinding
+        private val binding: ItemProductGridBinding,
+        private val onClickItem: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product) {
             binding.product = item
+            binding.root.setOnClickListener { onClickItem(item.id) }
         }
 
         companion object {
-            fun create(parent: ViewGroup): ProductGridViewHolder {
+            fun create(parent: ViewGroup, onClickItem: (Long) -> Unit): ProductGridViewHolder {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_product_grid, parent, false)
                 val binding = ItemProductGridBinding.bind(view)
-                return ProductGridViewHolder(binding)
+                return ProductGridViewHolder(binding, onClickItem)
             }
         }
     }
 
     class ProductLinearViewHolder(
-        private val binding: ItemProductLinearBinding
+        private val binding: ItemProductLinearBinding,
+        private val onClickItem: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Product) {
             binding.product = item
+            binding.root.setOnClickListener { onClickItem(item.id) }
         }
 
         companion object {
-            fun create(parent: ViewGroup): ProductLinearViewHolder {
+            fun create(parent: ViewGroup, onClickItem: (Long) -> Unit): ProductLinearViewHolder {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_product_linear, parent, false)
                 val binding = ItemProductLinearBinding.bind(view)
-                return ProductLinearViewHolder(binding)
+                return ProductLinearViewHolder(binding, onClickItem)
             }
         }
     }
@@ -62,8 +68,8 @@ class ProductAdapter : ListAdapter<Product, RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            GRID -> ProductGridViewHolder.create(parent)
-            else -> ProductLinearViewHolder.create(parent)
+            GRID -> ProductGridViewHolder.create(parent, onClickItem)
+            else -> ProductLinearViewHolder.create(parent, onClickItem)
         }
     }
 
