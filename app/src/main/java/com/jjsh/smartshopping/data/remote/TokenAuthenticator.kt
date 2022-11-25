@@ -1,7 +1,11 @@
 package com.jjsh.smartshopping.data.remote
 
+import android.content.Context
 import com.jjsh.smartshopping.common.Auth
 import com.jjsh.smartshopping.data.remote.api.TokenService
+import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
+import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -13,7 +17,8 @@ import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
     private val auth: Auth,
-    private val service: TokenService
+    private val service: TokenService,
+    @ApplicationContext private val context: Context
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         if (response.code == 401) {
@@ -47,6 +52,7 @@ class TokenAuthenticator @Inject constructor(
             auth.token = tokenResponse.data
         } else {
             auth.signOut()
+            context.clearTaskAndStart<SigninActivity>()
         }
     }
 }
