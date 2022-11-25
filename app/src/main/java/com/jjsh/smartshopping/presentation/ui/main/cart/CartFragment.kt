@@ -2,6 +2,7 @@ package com.jjsh.smartshopping.presentation.ui.main.cart
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjsh.smartshopping.R
@@ -22,11 +23,17 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
     private val viewModel by viewModels<CartViewModel>()
     private val cartAdapter by lazy {
         CartAdapter(
-            _updateCartItem = {
+            _updateCartItem = { item ->
+                if (item.amount > 0)
+                    viewModel.updateCartItem(item)
 
             },
-            _deleteCartItem = {
-
+            _deleteCartItem = { item ->
+                AlertDialog.Builder(requireContext())
+                    .setMessage(getString(R.string.text_do_you_wanna_delete))
+                    .setPositiveButton(getString(R.string.text_yes)) { _, _ -> viewModel.deleteCartItem(item) }
+                    .setNegativeButton(getString(R.string.text_no)) { d, _ -> d.dismiss() }
+                    .show()
             }
         )
     }
