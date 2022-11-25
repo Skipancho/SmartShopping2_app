@@ -46,8 +46,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_total_price"
             app:layout_constraintTop_toBottomOf="@id/tv_check_all"
             tools:listitem="@layout/item_checklist" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:gravity="end"
+            android:padding="4dp"
+            android:text="@{@string/price_format(viewModel.totalPrice)}"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="1000원" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

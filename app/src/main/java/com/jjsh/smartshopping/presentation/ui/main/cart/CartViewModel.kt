@@ -23,11 +23,15 @@ class CartViewModel @Inject constructor(
     private val _cartList = MutableStateFlow<UiState<List<CartItem>>>(UiState.Init)
     val cartList: StateFlow<UiState<List<CartItem>>> get() = _cartList
 
+    private val _totalPrice = MutableStateFlow(0)
+    val totalPrice : StateFlow<Int> get() = _totalPrice
+
     fun getCartItems() {
         viewModelScope.launch {
             getCartItemsUseCase().collectLatest { result ->
                 result.onSuccess {
                     _cartList.value = UiState.Success(it)
+                    _totalPrice.value = it.sumOf { item -> item.totalPrice }
                 }.onFailure {
                     _cartList.value = UiState.Error(it)
                 }
