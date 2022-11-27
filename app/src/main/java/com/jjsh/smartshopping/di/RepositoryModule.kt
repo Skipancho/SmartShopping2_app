@@ -25,6 +25,12 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
+    abstract fun bindPurchaseRepository(
+        purchaseRepositoryImpl: PurchaseRepositoryImpl
+    ): PurchaseRepository
+
+    @Singleton
+    @Binds
     abstract fun bindSearchHistoryRepository(
         searchHistoryRepositoryImpl: SearchHistoryRepositoryImpl
     ): SearchHistoryRepository

@@ -3,9 +3,12 @@ package com.jjsh.smartshopping.data.remote.datasource
 import com.jjsh.smartshopping.common.ErrorException
 import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
+import com.jjsh.smartshopping.data.remote.api.PurchaseService
+import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
+import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
 import com.jjsh.smartshopping.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,10 +18,11 @@ import javax.inject.Inject
 class RemoteDataSourceImpl @Inject constructor(
     private val authService: AuthService,
     private val productService: ProductService,
-    @IoDispatcher private val ioDispatcher : CoroutineDispatcher
+    private val purchaseService: PurchaseService,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RemoteDataSource {
     override suspend fun signin(signinRequest: SigninRequest): Result<SigninResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = authService.signin(signinRequest)
                 response.successOrThrow()
@@ -28,7 +32,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun signup(signupRequest: SignupRequest): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.signup(signupRequest).successOrThrow()
             }
@@ -36,7 +40,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun validateUserId(userId: String): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.validateUserId(userId).successOrThrow()
             }
@@ -44,7 +48,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun validateNickName(nickName: String): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.validateNickName(nickName).successOrThrow()
             }
@@ -52,7 +56,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getProduct(id: Long): Result<ProductResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.getProduct(id)
                 response.successOrThrow()
@@ -62,7 +66,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.findProductByBarcode(barcode)
                 response.successOrThrow()
@@ -77,11 +81,29 @@ class RemoteDataSourceImpl @Inject constructor(
         direction: String,
         keyword: String?
     ): Result<List<ProductResponse>> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.getProducts(productId, categoryId, direction, keyword)
                 response.successOrThrow()
                 response.getOrThrow(ErrorException.ProductException)
+            }
+        }
+    }
+
+    override suspend fun registerPurchaseRecord(purchaseRequest: List<PurchaseRequest>): Result<Unit> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                purchaseService.registerPurchaseRecord(purchaseRequest).successOrThrow()
+            }
+        }
+    }
+
+    override suspend fun getPurchaseRecord(year: Int, month: Int): Result<List<PurchaseResponse>> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                val response = purchaseService.getPurchaseRecord(year, month)
+                response.successOrThrow()
+                response.getOrThrow(ErrorException.PurchaseException)
             }
         }
     }
