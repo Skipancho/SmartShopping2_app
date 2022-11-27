@@ -6,7 +6,6 @@ import com.jjsh.smartshopping.data.remote.request.SignupRequest
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
 import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
-import retrofit2.http.Query
 
 interface RemoteDataSource {
 
@@ -30,7 +29,7 @@ interface RemoteDataSource {
     ): Result<List<ProductResponse>>
 
     suspend fun registerPurchaseRecord(
-        purchaseRequest: PurchaseRequest
+        purchaseRequest: List<PurchaseRequest>
     ): Result<Unit>
 
     suspend fun getPurchaseRecord(

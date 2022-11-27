@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface PurchaseService {
     @POST("/api/v1/purchase")
     suspend fun registerPurchaseRecord(
-        @Body purchaseRequest: PurchaseRequest
+        @Body purchaseRequest: List<PurchaseRequest>
     ): ApiResponse<Unit>
 
     @GET("/api/v1/purchase")

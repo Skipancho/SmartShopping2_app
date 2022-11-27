@@ -19,10 +19,10 @@ class RemoteDataSourceImpl @Inject constructor(
     private val authService: AuthService,
     private val productService: ProductService,
     private val purchaseService: PurchaseService,
-    @IoDispatcher private val ioDispatcher : CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RemoteDataSource {
     override suspend fun signin(signinRequest: SigninRequest): Result<SigninResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = authService.signin(signinRequest)
                 response.successOrThrow()
@@ -32,7 +32,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun signup(signupRequest: SignupRequest): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.signup(signupRequest).successOrThrow()
             }
@@ -40,7 +40,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun validateUserId(userId: String): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.validateUserId(userId).successOrThrow()
             }
@@ -48,7 +48,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun validateNickName(nickName: String): Result<Unit> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 authService.validateNickName(nickName).successOrThrow()
             }
@@ -56,7 +56,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getProduct(id: Long): Result<ProductResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.getProduct(id)
                 response.successOrThrow()
@@ -66,7 +66,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.findProductByBarcode(barcode)
                 response.successOrThrow()
@@ -81,7 +81,7 @@ class RemoteDataSourceImpl @Inject constructor(
         direction: String,
         keyword: String?
     ): Result<List<ProductResponse>> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = productService.getProducts(productId, categoryId, direction, keyword)
                 response.successOrThrow()
@@ -90,8 +90,8 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun registerPurchaseRecord(purchaseRequest: PurchaseRequest): Result<Unit> {
-        return withContext(ioDispatcher){
+    override suspend fun registerPurchaseRecord(purchaseRequest: List<PurchaseRequest>): Result<Unit> {
+        return withContext(ioDispatcher) {
             runCatching {
                 purchaseService.registerPurchaseRecord(purchaseRequest).successOrThrow()
             }
@@ -99,7 +99,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getPurchaseRecord(year: Int, month: Int): Result<List<PurchaseResponse>> {
-        return withContext(ioDispatcher){
+        return withContext(ioDispatcher) {
             runCatching {
                 val response = purchaseService.getPurchaseRecord(year, month)
                 response.successOrThrow()
