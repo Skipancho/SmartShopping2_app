@@ -6,5 +6,6 @@ sealed class ErrorException : RuntimeException() {
     object PasswordDiffException : ErrorException()
     object EmptyMemberException : ErrorException()
     object ProductException : ErrorException()
+    object PurchaseException : ErrorException()
     data class DefaultException(val msg: String?) : ErrorException()
 }
