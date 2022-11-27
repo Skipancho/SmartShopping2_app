@@ -1,6 +1,7 @@
 package com.jjsh.smartshopping.presentation.ui.registration.cart
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityCartRegistrationBinding
@@ -25,8 +26,15 @@ class CartRegistrationActivity :
 
         binding.viewModel = viewModel
 
+        initActionBar()
         initBarcodeScanner(savedInstanceState)
         observeData()
+    }
+
+    private fun initActionBar() {
+        setSupportActionBar(binding.mtbToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_24)
     }
 
     private fun initBarcodeScanner(savedInstanceState: Bundle?) {
@@ -95,5 +103,14 @@ class CartRegistrationActivity :
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         captureManager.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

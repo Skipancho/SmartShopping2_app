@@ -31,7 +31,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
             _deleteCartItem = { item ->
                 AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.text_do_you_wanna_delete))
-                    .setPositiveButton(getString(R.string.text_yes)) { _, _ -> viewModel.deleteCartItem(item) }
+                    .setPositiveButton(getString(R.string.text_yes)) { _, _ ->
+                        viewModel.deleteCartItem(
+                            item
+                        )
+                    }
                     .setNegativeButton(getString(R.string.text_no)) { d, _ -> d.dismiss() }
                     .show()
             }
@@ -57,8 +61,15 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
         }
 
         binding.btnAddToCart.setOnClickListener {
-           // todo. 수정 필요
             requireContext().start<CartRegistrationActivity>()
+        }
+
+        binding.btnPurchaseCompleted.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.text_do_you_wanna_purchase))
+                .setPositiveButton(getString(R.string.text_yes)) { _, _ -> viewModel.registerPurchaseRecord() }
+                .setNegativeButton(getString(R.string.text_no)) { d, _ -> d.dismiss() }
+                .show()
         }
     }
 
@@ -67,6 +78,19 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
             when (it) {
                 is UiState.Success -> {
                     cartAdapter.submitList(it.data.toMutableList())
+                }
+                is UiState.Error -> {
+                    requireContext().errorHandling(it.err)
+                }
+                else -> {}
+            }
+        }
+
+        observeFlowWithLifecycle(viewModel.registerPurchaseEvent) {
+            when (it) {
+                is UiState.Success -> {
+                    viewModel.deleteCartItem(*it.data.toTypedArray())
+                    viewModel.initPurchaseEvent()
                 }
                 is UiState.Error -> {
                     requireContext().errorHandling(it.err)
