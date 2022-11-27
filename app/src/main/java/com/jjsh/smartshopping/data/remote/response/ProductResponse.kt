@@ -11,6 +11,7 @@ data class ProductResponse(
     @SerializedName("sprice") val sPrice: Int,
     val status: String,
     val sellerId: Long,
+    val categoryId : Int,
     val imagePaths: List<String>
 ) {
     fun toProduct() = Product(
@@ -21,6 +22,7 @@ data class ProductResponse(
         sPrice = sPrice,
         status = status,
         sellerId = sellerId,
+        categoryId = categoryId,
         imagePaths = imagePaths,
         thumbnailPath = imagePaths.firstOrNull() ?: ""
     )
