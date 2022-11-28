@@ -5,6 +5,7 @@
     <string name="price_format">%,1d원</string>
     <string name="add_btn_format">%d개 담기</string>
     <string name="search_result_format">\"%1$s\"의 검색 결과</string>
+    <string name="year_month_format">%1d년 %2d월</string>
 
     <!--toast msg-->
     <string name="toast_msg_id_checked">이용 가능한 아이디 입니다.</string>
