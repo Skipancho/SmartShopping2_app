@@ -2,11 +2,15 @@ package com.jjsh.smartshopping.data.remote.datasource
 
 import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
+import com.jjsh.smartshopping.data.remote.api.PurchaseService
 import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakeAuthService
 import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakeProductService
+import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakePurchaseService
+import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
+import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,15 +34,25 @@ internal class RemoteDataSourceImplTest {
 
     private val testProductResponses = listOf<ProductResponse>(
         ProductResponse(
-            0L, "name0", "desc0", 10000, 9000, "SELLABLE", 0L, listOf("imageUrl0")
+            1L, "name0", "desc0", 10000, 9000, "SELLABLE", 1L, 1, listOf("imageUrl0")
         ),
         ProductResponse(
-            1L, "name1", "desc1", 1000, 900, "SELLABLE", 1L, listOf("imageUrl1")
+            2L, "name1", "desc1", 1000, 900, "SELLABLE", 2L, 2, listOf("imageUrl1")
+        )
+    )
+
+    private val testPurchaseResponses = listOf<PurchaseResponse>(
+        PurchaseResponse(
+            1L,"category1",1L,"name1",10000,1
+        ),
+        PurchaseResponse(
+            2L,"category2",2L,"name2",9000,10
         )
     )
 
     private lateinit var fakeAuthService: AuthService
     private lateinit var fakeProductService: ProductService
+    private lateinit var fakePurchaseService: PurchaseService
     private lateinit var testDispatcher: CoroutineDispatcher
 
     private lateinit var remoteDataSource: RemoteDataSource
@@ -47,11 +61,14 @@ internal class RemoteDataSourceImplTest {
     fun setUp() {
         fakeAuthService = FakeAuthService(testSigninResponse)
         fakeProductService = FakeProductService(testProductResponses)
+        fakePurchaseService = FakePurchaseService(testPurchaseResponses)
+
         testDispatcher = UnconfinedTestDispatcher()
 
         remoteDataSource = RemoteDataSourceImpl(
             fakeAuthService,
             fakeProductService,
+            fakePurchaseService,
             testDispatcher
         )
     }
@@ -74,7 +91,7 @@ internal class RemoteDataSourceImplTest {
         runTest {
             val expected = Result.success(Unit)
             val actual = remoteDataSource.signup(
-                SignupRequest("id","password","nickName","name")
+                SignupRequest("id", "password", "nickName", "name")
             )
             assertEquals(expected, actual)
         }
@@ -111,7 +128,35 @@ internal class RemoteDataSourceImplTest {
     fun getProducts() {
         runTest {
             val expected = Result.success(testProductResponses)
-            val actual = remoteDataSource.getProducts(0L,null,"next",null)
+            val actual = remoteDataSource.getProducts(0L, null, "next", null)
+            assertEquals(expected, actual)
+        }
+    }
+
+    @Test
+    fun registerPurchaseRecord() {
+        runTest {
+            val expected = Result.success(Unit)
+            val actual = remoteDataSource.registerPurchaseRecord(
+                listOf(
+                    PurchaseRequest(
+                        productId = 3L,
+                        productName = "name4",
+                        price = 5000,
+                        amount = 1,
+                        categoryId = 3,
+                    )
+                )
+            )
+            assertEquals(expected, actual)
+        }
+    }
+
+    @Test
+    fun getPurchaseRecord() {
+        runTest {
+            val expected = Result.success(testPurchaseResponses)
+            val actual = remoteDataSource.getPurchaseRecord(2022,11)
             assertEquals(expected, actual)
         }
     }
