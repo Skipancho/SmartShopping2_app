@@ -1,9 +1,8 @@
-package com.jjsh.smartshopping.data.remote.datasource.fakeService
+package com.jjsh.smartshopping.data.fake.service
 
 import com.jjsh.smartshopping.data.remote.ApiResponse
 import com.jjsh.smartshopping.data.remote.api.ProductService
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
-import retrofit2.http.Query
 
 class FakeProductService(
     private val fakeProductResponses: List<ProductResponse>

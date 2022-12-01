@@ -3,9 +3,9 @@ package com.jjsh.smartshopping.data.remote.datasource
 import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
 import com.jjsh.smartshopping.data.remote.api.PurchaseService
-import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakeAuthService
-import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakeProductService
-import com.jjsh.smartshopping.data.remote.datasource.fakeService.FakePurchaseService
+import com.jjsh.smartshopping.data.fake.service.FakeAuthService
+import com.jjsh.smartshopping.data.fake.service.FakeProductService
+import com.jjsh.smartshopping.data.fake.service.FakePurchaseService
 import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
@@ -55,7 +55,7 @@ internal class RemoteDataSourceImplTest {
     private lateinit var fakePurchaseService: PurchaseService
     private lateinit var testDispatcher: CoroutineDispatcher
 
-    private lateinit var remoteDataSource: RemoteDataSource
+    private lateinit var remoteDataSource: RemoteDataSourceImpl
 
     @Before
     fun setUp() {

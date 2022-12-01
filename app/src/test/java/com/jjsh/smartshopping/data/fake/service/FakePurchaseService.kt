@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.data.remote.datasource.fakeService
+package com.jjsh.smartshopping.data.fake.service
 
 import com.jjsh.smartshopping.data.remote.ApiResponse
 import com.jjsh.smartshopping.data.remote.api.PurchaseService
