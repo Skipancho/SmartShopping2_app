@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.data.remote.datasource.fakeService
+package com.jjsh.smartshopping.data.fake.service
 
 import com.jjsh.smartshopping.data.remote.ApiResponse
 import com.jjsh.smartshopping.data.remote.api.ProductService
@@ -11,12 +11,17 @@ class FakeProductService(
         productId: Long,
         categoryId: Int?,
         direction: String,
-        keyword: String?
+        keyword: String?,
+        pageSize: Int
     ): ApiResponse<List<ProductResponse>> {
         return ApiResponse(true, fakeProductResponses, null)
     }
 
     override suspend fun getProduct(id: Long): ApiResponse<ProductResponse> {
         return ApiResponse(true, fakeProductResponses.find { it.id == id }, null)
+    }
+
+    override suspend fun findProductByBarcode(barcode: Long): ApiResponse<ProductResponse> {
+        return ApiResponse(true, fakeProductResponses[barcode.toInt()], null)
     }
 }
