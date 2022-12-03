@@ -40,23 +40,30 @@ internal class LocalDataSourceImplTest {
     )
 
 
-    private lateinit var fakeSearchHistoryDao: SearchHistoryDao
-    private lateinit var fakeCartItemDao: CartItemDao
-    private lateinit var fakeCheckItemDao: CheckItemDao
+    private var _fakeSearchHistoryDao: SearchHistoryDao? = null
+    private val fakeSearchHistoryDao get() = _fakeSearchHistoryDao ?: error("fakeDao is null")
 
-    private lateinit var testDispatcher: CoroutineDispatcher
+    private var _fakeCartItemDao: CartItemDao? = null
+    private val fakeCartItemDao get() = _fakeCartItemDao ?: error("fakeDao is null")
 
-    private lateinit var localDataSource: LocalDataSourceImpl
+    private var _fakeCheckItemDao: CheckItemDao? = null
+    private val fakeCheckItemDao get() = _fakeCheckItemDao ?: error("fakeDao is null")
+
+    private var _testDispatcher: CoroutineDispatcher? = null
+    private val testDispatcher get() = _testDispatcher ?: error("Dispatcher is null")
+
+    private var _localDataSource: LocalDataSourceImpl? = null
+    private val localDataSource get() = _localDataSource ?: error("localDataSource is null")
 
     @Before
     fun setUp() {
-        fakeSearchHistoryDao = FakeSearchHistoryDao(testSearchHistoryDtoList)
-        fakeCartItemDao = FakeCartItemDao(testCartItemDtoList)
-        fakeCheckItemDao = FakeCheckItemDao(testCheckItemDtoList)
+        _fakeSearchHistoryDao = FakeSearchHistoryDao(testSearchHistoryDtoList)
+        _fakeCartItemDao = FakeCartItemDao(testCartItemDtoList)
+        _fakeCheckItemDao = FakeCheckItemDao(testCheckItemDtoList)
 
-        testDispatcher = UnconfinedTestDispatcher()
+        _testDispatcher = UnconfinedTestDispatcher()
 
-        localDataSource = LocalDataSourceImpl(
+        _localDataSource = LocalDataSourceImpl(
             fakeSearchHistoryDao,
             fakeCartItemDao,
             fakeCheckItemDao,
@@ -66,7 +73,13 @@ internal class LocalDataSourceImplTest {
 
     @After
     fun tearDown() {
+        _fakeSearchHistoryDao = null
+        _fakeCartItemDao = null
+        _fakeCheckItemDao = null
 
+        _testDispatcher = null
+
+        _localDataSource = null
     }
 
     @Test

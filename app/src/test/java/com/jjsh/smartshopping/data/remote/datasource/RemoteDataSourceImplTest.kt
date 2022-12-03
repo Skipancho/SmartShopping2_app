@@ -43,34 +43,53 @@ internal class RemoteDataSourceImplTest {
 
     private val testPurchaseResponses = listOf<PurchaseResponse>(
         PurchaseResponse(
-            1L,"category1",1L,"name1",10000,1
+            1L, "category1", 1L, "name1", 10000, 1
         ),
         PurchaseResponse(
-            2L,"category2",2L,"name2",9000,10
+            2L, "category2", 2L, "name2", 9000, 10
         )
     )
 
-    private lateinit var fakeAuthService: AuthService
-    private lateinit var fakeProductService: ProductService
-    private lateinit var fakePurchaseService: PurchaseService
-    private lateinit var testDispatcher: CoroutineDispatcher
+    private var _fakeAuthService: AuthService? = null
+    private val fakeAuthService get() = _fakeAuthService ?: error("AuthService is null")
 
-    private lateinit var remoteDataSource: RemoteDataSourceImpl
+    private var _fakeProductService: ProductService? = null
+    private val fakeProductService get() = _fakeProductService ?: error("ProductService is null")
+
+    private var _fakePurchaseService: PurchaseService? = null
+    private val fakePurchaseService get() = _fakePurchaseService ?: error("PurchaseService is null")
+
+    private var _testDispatcher: CoroutineDispatcher? = null
+    private val testDispatcher get() = _testDispatcher ?: error("Dispatcher is null")
+
+    private var _remoteDataSource: RemoteDataSourceImpl? = null
+    private val remoteDataSource get() = _remoteDataSource ?: error("remoteDataSource is null")
 
     @Before
     fun setUp() {
-        fakeAuthService = FakeAuthService(testSigninResponse)
-        fakeProductService = FakeProductService(testProductResponses)
-        fakePurchaseService = FakePurchaseService(testPurchaseResponses)
+        _fakeAuthService = FakeAuthService(testSigninResponse)
+        _fakeProductService = FakeProductService(testProductResponses)
+        _fakePurchaseService = FakePurchaseService(testPurchaseResponses)
 
-        testDispatcher = UnconfinedTestDispatcher()
+        _testDispatcher = UnconfinedTestDispatcher()
 
-        remoteDataSource = RemoteDataSourceImpl(
+        _remoteDataSource = RemoteDataSourceImpl(
             fakeAuthService,
             fakeProductService,
             fakePurchaseService,
             testDispatcher
         )
+    }
+
+    @After
+    fun tearDown() {
+        _fakeAuthService = null
+        _fakeProductService = null
+        _fakePurchaseService = null
+
+        _testDispatcher = null
+
+        _remoteDataSource = null
     }
 
     @Test
@@ -119,7 +138,7 @@ internal class RemoteDataSourceImplTest {
     fun getProduct() {
         runTest {
             val expected = Result.success(testProductResponses[0])
-            val actual = remoteDataSource.getProduct(0L)
+            val actual = remoteDataSource.getProduct(1L)
             assertEquals(expected, actual)
         }
     }
@@ -156,13 +175,8 @@ internal class RemoteDataSourceImplTest {
     fun getPurchaseRecord() {
         runTest {
             val expected = Result.success(testPurchaseResponses)
-            val actual = remoteDataSource.getPurchaseRecord(2022,11)
+            val actual = remoteDataSource.getPurchaseRecord(2022, 11)
             assertEquals(expected, actual)
         }
-    }
-
-    @After
-    fun tearDown() {
-
     }
 }
