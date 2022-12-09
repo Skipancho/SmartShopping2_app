@@ -1,6 +1,14 @@
 package com.jjsh.smartshopping.domain.repository
 
+import com.jjsh.smartshopping.domain.model.UserInfo
+
 interface AuthRepository {
+    fun signOut()
+
+    fun getUserInfo(): UserInfo
+
+    fun getUserToken(): String?
+
     suspend fun signin(userId: String, password: String): Result<Unit>
 
     suspend fun signup(

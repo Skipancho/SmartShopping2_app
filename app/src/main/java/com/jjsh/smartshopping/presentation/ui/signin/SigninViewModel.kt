@@ -2,7 +2,7 @@ package com.jjsh.smartshopping.presentation.ui.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.domain.repository.AuthRepository
 import com.jjsh.smartshopping.domain.usecase.SigninUseCase
 import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SigninViewModel @Inject constructor(
     private val signinUseCase: SigninUseCase,
-    auth: Auth
+    authRepository: AuthRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Init)
     val uiState: StateFlow<UiState<Unit>> get() = _uiState
@@ -29,7 +29,7 @@ class SigninViewModel @Inject constructor(
     val password = MutableStateFlow("")
 
     init {
-       if (auth.token != null)
+       if (authRepository.getUserToken() != null)
            _uiState.value = UiState.Success(Unit)
     }
 
