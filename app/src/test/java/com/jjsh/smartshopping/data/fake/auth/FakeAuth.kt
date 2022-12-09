@@ -1,6 +1,6 @@
 package com.jjsh.smartshopping.data.fake.auth
 
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.data.auth.Auth
 
 class FakeAuth: Auth() {
     override var token: String? = "fakeToken"

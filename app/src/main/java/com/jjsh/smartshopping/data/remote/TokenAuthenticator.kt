@@ -1,7 +1,7 @@
 package com.jjsh.smartshopping.data.remote
 
 import android.content.Context
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.data.auth.Auth
 import com.jjsh.smartshopping.data.remote.api.TokenService
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
 import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity

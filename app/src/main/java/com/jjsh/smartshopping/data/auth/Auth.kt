@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.common
+package com.jjsh.smartshopping.data.auth
 
 abstract class Auth {
     abstract var token: String?

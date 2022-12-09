@@ -1,6 +1,6 @@
 package com.jjsh.smartshopping.data.remote
 
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.data.auth.Auth
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
