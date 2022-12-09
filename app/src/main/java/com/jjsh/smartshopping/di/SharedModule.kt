@@ -3,8 +3,8 @@ package com.jjsh.smartshopping.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.jjsh.smartshopping.common.AuthImpl
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.data.auth.AuthImpl
+import com.jjsh.smartshopping.data.auth.Auth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +25,5 @@ object SharedModule {
     @Provides
     fun provideAuthInformation(
         prefs : SharedPreferences
-    ):Auth = AuthImpl(prefs)
+    ): Auth = AuthImpl(prefs)
 }

@@ -1,4 +1,4 @@
-package com.jjsh.smartshopping.common
+package com.jjsh.smartshopping.data.auth
 
 import android.content.SharedPreferences
 import javax.inject.Inject

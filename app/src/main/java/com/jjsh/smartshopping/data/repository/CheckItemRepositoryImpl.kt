@@ -1,6 +1,6 @@
 package com.jjsh.smartshopping.data.repository
 
-import com.jjsh.smartshopping.common.Auth
+import com.jjsh.smartshopping.data.auth.Auth
 import com.jjsh.smartshopping.data.local.datasource.LocalDataSource
 import com.jjsh.smartshopping.data.local.dto.toDto
 import com.jjsh.smartshopping.domain.model.CheckItem
@@ -13,6 +13,7 @@ class CheckItemRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val auth: Auth
 ) : CheckItemRepository {
+
     override fun getCheckItems(): Flow<Result<List<CheckItem>>> {
         return localDataSource.getCheckItems(auth.userCode).map { result ->
             result.mapCatching { list ->
