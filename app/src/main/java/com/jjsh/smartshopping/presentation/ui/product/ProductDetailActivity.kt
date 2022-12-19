@@ -8,16 +8,20 @@ import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityProductDetailBinding
 import com.jjsh.smartshopping.presentation.UiState
+import com.jjsh.smartshopping.presentation.adapter.ImageViewPagerAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailActivity :
-    BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail) {
+class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail) {
 
     private val viewModel by viewModels<ProductDetailViewModel>()
+
+    private val imageViewPagerAdapter by lazy {
+        ImageViewPagerAdapter()
+    }
 
     private var _productId : Long = -1L
     private val productId get() = _productId
@@ -27,12 +31,15 @@ class ProductDetailActivity :
 
         binding.viewModel = viewModel
 
-        _productId = intent.getLongExtra(PRODUCT_ID, -1L)
-
+        initData()
         initActionBar()
         initView()
-        initData()
         observeData()
+    }
+
+    private fun initData() {
+        _productId = intent.getLongExtra(PRODUCT_ID, -1L)
+        viewModel.getProduct(productId)
     }
 
     private fun initActionBar() {
@@ -50,15 +57,16 @@ class ProductDetailActivity :
                 .newInstance(productId)
                 .show(supportFragmentManager,null)
         }
-    }
 
-    private fun initData() {
-        viewModel.getProduct(productId)
+        binding.vpDetailImage.adapter = imageViewPagerAdapter
     }
 
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.uiState) {
             when (it) {
+                is UiState.Success -> {
+                    imageViewPagerAdapter.setImageUrls(it.data.imagePaths)
+                }
                 is UiState.Error -> {
                     errorHandling(it.err)
                 }
