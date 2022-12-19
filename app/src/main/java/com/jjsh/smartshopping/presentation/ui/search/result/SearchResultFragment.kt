@@ -11,12 +11,19 @@ import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
+import com.jjsh.smartshopping.presentation.ui.product.ProductDetailActivity
 import com.jjsh.smartshopping.presentation.ui.search.SearchViewModel
 
 class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(R.layout.fragment_search_result) {
 
     private val viewModel by activityViewModels<SearchViewModel>()
-    private val productAdapter by lazy { ProductAdapter() }
+
+    private val productAdapter by lazy {
+        ProductAdapter {
+            ProductDetailActivity.showDetail(requireContext(), it)
+        }
+    }
+
     private val gridLayoutManager by lazy { GridLayoutManager(requireContext(), 2) }
     private val linearLayoutManager by lazy { LinearLayoutManager(requireContext()) }
 

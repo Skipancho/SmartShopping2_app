@@ -12,6 +12,7 @@ import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.ui.product.ProductDetailActivity
 import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import com.jjsh.smartshopping.presentation.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +22,11 @@ import timber.log.Timber
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeViewModel>()
-    private val productAdapter by lazy { ProductAdapter(){
-        ChecklistRegistrationDialog.newInstance(it).show(parentFragmentManager,null)
-    } }
+    private val productAdapter by lazy {
+        ProductAdapter {
+            ProductDetailActivity.showDetail(requireContext(), it)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     (recyclerView.layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
                 Timber.e("lastItemPosition : $lastVisibleItemPosition")
                 val itemTotalCount = productAdapter.itemCount
-                if (lastVisibleItemPosition+1 == itemTotalCount) {
+                if (lastVisibleItemPosition + 1 == itemTotalCount) {
                     viewModel.getNextPage()
                 }
             }
@@ -66,7 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
         observeFlowWithLifecycle(viewModel.moveToSearchEvent) {
-            if (it){
+            if (it) {
                 requireContext().start<SearchActivity>()
                 viewModel.initMoveToSearchPageEvent()
             }
