@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import com.google.android.material.tabs.TabLayoutMediator
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityProductDetailBinding
 import com.jjsh.smartshopping.presentation.UiState
@@ -59,6 +60,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
         }
 
         binding.vpDetailImage.adapter = imageViewPagerAdapter
+
+        TabLayoutMediator(binding.tlImageIndicator,binding.vpDetailImage){_,_ -> }.attach()
     }
 
     private fun observeData() {
