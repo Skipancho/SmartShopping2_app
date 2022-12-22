@@ -22,7 +22,7 @@
             android:backgroundTint="@color/purple_500"
             android:gravity="center"
             android:padding="4dp"
-            android:background="@drawable/bg_rect_250_radius_ffffffff"
+            android:background="@drawable/bg_rect_radius_250_ffffffff"
             android:text="@{chartBody.category}"
             android:textSize="11sp" />
 
