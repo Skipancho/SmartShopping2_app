@@ -18,7 +18,7 @@ class PurchaseRecordViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _purchaseRecord = MutableStateFlow<UiState<List<Purchase>>>(UiState.Init)
-    val purchase: StateFlow<UiState<List<Purchase>>> get() = _purchaseRecord
+    val purchaseRecord: StateFlow<UiState<List<Purchase>>> get() = _purchaseRecord
 
     private val _currentYear = MutableStateFlow(DateUtil.year())
     val currentYear: StateFlow<Int> get() = _currentYear

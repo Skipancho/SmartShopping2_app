@@ -52,5 +52,55 @@
                 android:src="@drawable/ic_forward_24"
                 app:tint="@color/gray_828282" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/layout_year_month">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_eceff1"
+                android:text="@string/text_product_name"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/layout_year_month" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_eceff1"
+                android:text="@string/text_amount"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/layout_year_month" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_eceff1"
+                android:text="@string/text_purchase_price"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/layout_year_month" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_purchase_record"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_header"
+            tools:listitem="@layout/item_purchase_record" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
