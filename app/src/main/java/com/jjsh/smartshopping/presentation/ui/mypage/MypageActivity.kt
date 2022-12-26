@@ -8,6 +8,8 @@ import com.jjsh.smartshopping.databinding.ActivityMypageBinding
 import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
+import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.ui.mypage.purchase.PurchaseRecordActivity
 import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +25,7 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
 
         initActionBar()
         observeData()
+        setEvent()
     }
 
     private fun initActionBar() {
@@ -39,6 +42,12 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
                 }
                 else -> {}
             }
+        }
+    }
+
+    private fun setEvent() {
+        binding.btnPurchaseRecord.setOnClickListener {
+            start<PurchaseRecordActivity>()
         }
     }
 

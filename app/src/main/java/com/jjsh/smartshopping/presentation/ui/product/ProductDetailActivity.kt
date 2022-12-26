@@ -12,6 +12,7 @@ import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ImageViewPagerAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.errorHandling
+import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -90,10 +91,9 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
     companion object {
         private const val PRODUCT_ID = "PRODUCT_ID"
         fun showDetail(context: Context, productId: Long) {
-            val intent = Intent(context, ProductDetailActivity::class.java).apply {
-                putExtra(PRODUCT_ID, productId)
+            context.start<ProductDetailActivity> {
+                it.putExtra(PRODUCT_ID, productId)
             }
-            context.startActivity(intent)
         }
     }
 }

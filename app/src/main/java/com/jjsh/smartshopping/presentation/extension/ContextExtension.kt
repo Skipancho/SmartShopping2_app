@@ -7,8 +7,9 @@ import android.widget.Toast
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.common.ErrorException
 
-inline fun <reified A : Activity> Context.start() {
+inline fun <reified A : Activity> Context.start(block : (Intent) -> Unit = {}) {
     val intent = Intent(this, A::class.java)
+    block(intent)
     startActivity(intent)
 }
 
