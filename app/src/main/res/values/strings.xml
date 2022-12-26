@@ -2,6 +2,7 @@
     <string name="app_name">SmartShopping</string>
 
     <!--format-->
+    <string name="amount_format">%d개</string>
     <string name="price_format">%,1d원</string>
     <string name="add_btn_format">%d개 담기</string>
     <string name="search_result_format">\"%1$s\"의 검색 결과</string>
@@ -40,4 +41,7 @@
     <string name="text_purchase_complete">구매 완료</string>
     <string name="text_do_you_wanna_purchase">구매를 완료하시겠습니까?</string>
     <string name="text_add_to_checklist">체크리스트 추가</string>
+    <string name="text_product_name">상품명</string>
+    <string name="text_amount">수량</string>
+    <string name="text_purchase_price">구매 가격</string>
 </resources>
