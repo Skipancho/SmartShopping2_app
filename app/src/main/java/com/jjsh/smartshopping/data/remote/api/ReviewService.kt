@@ -10,12 +10,12 @@ import retrofit2.http.Query
 
 interface ReviewService {
     @POST("/api/v1/review")
-    fun writeReview(
+    suspend fun writeReview(
         @Body reviewRequest: ReviewRequest
     ): ApiResponse<Unit>
 
     @GET("/api/v1/reviews")
-    fun getReviews(
+    suspend fun getReviews(
         @Query("productId") productId: Long?
     ): ApiResponse<List<ReviewResponse>>
 }

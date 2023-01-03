@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jjsh.smartshopping.presentation.ui.registration.review.ReviewRegistrationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.registration.review.ReviewTextFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="16dp" />
+
+        <ImageView
+            android:id="@+id/iv_item_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:image="@{viewModel.currentProduct.thumbnailPath}"
+            app:layout_constraintStart_toEndOf="@id/gl_begin"
+            app:layout_constraintTop_toTopOf="@id/gl_top"
+            tools:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{viewModel.currentProduct.name}"
+            android:textSize="24sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/iv_item_image"
+            app:layout_constraintTop_toTopOf="@id/iv_item_image"
+            tools:text="상품명" />
+
+        <LinearLayout
+            android:id="@+id/layout_star"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.showScore()}"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/iv_item_image"
+            app:layout_constraintEnd_toEndOf="@id/tv_item_name"
+            app:layout_constraintStart_toStartOf="@id/tv_item_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_name">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@{viewModel.reviewScore >= 1 ? @drawable/ic_star_50 : @drawable/ic_empty_star_50}"
+                tools:src="@drawable/ic_star_50" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@{viewModel.reviewScore >= 2 ? @drawable/ic_star_50 : @drawable/ic_empty_star_50}"
+                tools:src="@drawable/ic_star_50" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@{viewModel.reviewScore >= 3 ? @drawable/ic_star_50 : @drawable/ic_empty_star_50}"
+                tools:src="@drawable/ic_star_50" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@{viewModel.reviewScore >= 4 ? @drawable/ic_star_50 : @drawable/ic_empty_star_50}"
+                tools:src="@drawable/ic_empty_star_50" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@{viewModel.reviewScore >= 5 ? @drawable/ic_star_50 : @drawable/ic_empty_star_50}"
+                tools:src="@drawable/ic_empty_star_50" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_review_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/bg_rect_stroke_20_radius_14_9dc7fa"
+            android:gravity="top|start"
+            android:maxLength="200"
+            android:padding="16dp"
+            android:text="@={viewModel.reviewText}"
+            app:layout_constraintBottom_toTopOf="@id/btn_write_review"
+            app:layout_constraintTop_toBottomOf="@id/iv_item_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text='@{viewModel.reviewText.length() + " / 200"}'
+            app:layout_constraintBottom_toBottomOf="@id/et_review_text"
+            app:layout_constraintEnd_toEndOf="@id/et_review_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_write_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.writeReview()}"
+            android:text="리뷰 작성하기"
+            app:layout_constraintBottom_toBottomOf="@id/gl_bottom"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
