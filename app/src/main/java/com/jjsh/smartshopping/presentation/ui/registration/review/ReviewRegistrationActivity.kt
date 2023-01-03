@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityReviewRegistrationBinding
+import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
+import com.jjsh.smartshopping.presentation.extension.errorHandling
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
 
@@ -55,7 +57,7 @@ class ReviewRegistrationActivity : BaseActivity<ActivityReviewRegistrationBindin
         }
 
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken,0)
+        inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 
     private fun showTextFragment() {
@@ -88,9 +90,17 @@ class ReviewRegistrationActivity : BaseActivity<ActivityReviewRegistrationBindin
 
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.showScoreFragment) {
-            when(it){
+            when (it) {
                 true -> showScoreFragment()
                 false -> showTextFragment()
+            }
+        }
+
+        observeFlowWithLifecycle(viewModel.uiState) {
+            when (it) {
+                is UiState.Success -> finish()
+                is UiState.Error -> errorHandling(it.err)
+                else -> {}
             }
         }
     }
