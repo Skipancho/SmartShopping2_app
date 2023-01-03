@@ -4,10 +4,7 @@ import com.jjsh.smartshopping.BuildConfig
 import com.jjsh.smartshopping.data.remote.ApiTokenInterceptor
 import com.jjsh.smartshopping.data.remote.RefreshTokenInterceptor
 import com.jjsh.smartshopping.data.remote.TokenAuthenticator
-import com.jjsh.smartshopping.data.remote.api.AuthService
-import com.jjsh.smartshopping.data.remote.api.ProductService
-import com.jjsh.smartshopping.data.remote.api.PurchaseService
-import com.jjsh.smartshopping.data.remote.api.TokenService
+import com.jjsh.smartshopping.data.remote.api.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -101,6 +98,12 @@ object ApiModule {
     fun providePurchaseService(
         @HttpClientRetrofit retrofit: Retrofit
     ): PurchaseService = retrofit.create(PurchaseService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideReviewService(
+        @HttpClientRetrofit retrofit: Retrofit
+    ): ReviewService = retrofit.create(ReviewService::class.java)
 
     @Provides
     @Singleton

@@ -1,10 +1,12 @@
 package com.jjsh.smartshopping.data.remote.datasource
 
 import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
+import com.jjsh.smartshopping.data.remote.request.ReviewRequest
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
 import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
+import com.jjsh.smartshopping.data.remote.response.ReviewResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
 
 interface RemoteDataSource {
@@ -35,4 +37,12 @@ interface RemoteDataSource {
     suspend fun getPurchaseRecord(
         year: Int, month: Int
     ): Result<List<PurchaseResponse>>
+
+    suspend fun writeReview(
+        reviewRequest: ReviewRequest
+    ) : Result<Unit>
+
+    suspend fun getReviews(
+        productId: Long?
+    ) : Result<List<ReviewResponse>>
 }
