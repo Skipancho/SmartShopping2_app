@@ -46,4 +46,10 @@ abstract class RepositoryModule {
     abstract fun bindCheckItemRepository(
         checkItemRepositoryImpl: CheckItemRepositoryImpl
     ): CheckItemRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindReviewRepository(
+        reviewRepositoryImpl: ReviewRepositoryImpl
+    ): ReviewRepository
 }
