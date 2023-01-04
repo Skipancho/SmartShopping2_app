@@ -44,4 +44,5 @@
     <string name="text_product_name">상품명</string>
     <string name="text_amount">수량</string>
     <string name="text_purchase_price">구매 가격</string>
+    <string name="text_purchase_record">구매 내역</string>
 </resources>

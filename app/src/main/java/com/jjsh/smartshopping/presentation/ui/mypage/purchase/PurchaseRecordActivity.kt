@@ -1,6 +1,7 @@
 package com.jjsh.smartshopping.presentation.ui.mypage.purchase
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjsh.smartshopping.R
@@ -32,6 +33,7 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
 
         binding.viewModel = viewModel
 
+        initActionBar()
         initView()
         observeData()
     }
@@ -39,6 +41,23 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
     override fun onResume() {
         super.onResume()
         viewModel.getPurchaseRecord()
+    }
+
+    private fun initActionBar() {
+        setSupportActionBar(binding.mtbToolbar)
+        supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_back_24)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initView() {

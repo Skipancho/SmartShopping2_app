@@ -15,13 +15,29 @@
         android:layout_height="match_parent"
         tools:context=".presentation.ui.mypage.purchase.PurchaseRecordActivity">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mtb_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/text_purchase_record"
+                app:titleCentered="true"
+                app:titleTextColor="@color/white" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <LinearLayout
             android:id="@+id/layout_year_month"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/layout_appbar">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -71,7 +87,7 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 android:layout_width="50dp"
@@ -83,7 +99,7 @@
 
             <View
                 android:layout_width="2dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 android:layout_width="match_parent"
