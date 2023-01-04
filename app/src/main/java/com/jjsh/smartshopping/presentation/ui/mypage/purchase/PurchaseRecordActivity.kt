@@ -11,6 +11,8 @@ import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
+import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.ui.registration.review.ReviewRegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +21,10 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
     private val viewModel by viewModels<PurchaseRecordViewModel>()
 
     private val purchaseAdapter by lazy {
-        PurchaseRecordAdapter()
+        PurchaseRecordAdapter {
+            if (!it.isReviewed)
+                startReviewActivity(it.id, it.productId)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +36,13 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
         observeData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPurchaseRecord()
+    }
+
     private fun initView() {
-        with(binding.rvPurchaseRecord){
+        with(binding.rvPurchaseRecord) {
             adapter = purchaseAdapter
             layoutManager = LinearLayoutManager(this@PurchaseRecordActivity)
             itemAnimator = null
@@ -42,7 +52,7 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
 
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.purchaseRecord) {
-            when(it) {
+            when (it) {
                 is UiState.Success -> {
                     purchaseAdapter.submitList(it.data.toMutableList())
                 }
@@ -51,6 +61,13 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
                 }
                 else -> {}
             }
+        }
+    }
+
+    private fun startReviewActivity(purchaseId: Long, productId: Long) {
+        start<ReviewRegistrationActivity> {
+            it.putExtra(ReviewRegistrationActivity.PURCHASE_ID, purchaseId)
+            it.putExtra(ReviewRegistrationActivity.PRODUCT_ID, productId)
         }
     }
 }
