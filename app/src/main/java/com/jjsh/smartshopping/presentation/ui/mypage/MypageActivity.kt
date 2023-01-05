@@ -10,6 +10,7 @@ import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.mypage.purchase.PurchaseRecordActivity
+import com.jjsh.smartshopping.presentation.ui.mypage.review.ReviewManagementActivity
 import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +36,9 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
     }
 
     private fun observeData() {
-        observeFlowWithLifecycle(viewModel.signOutEvent){
-            when(it){
-                is UiEvent.Success ->{
+        observeFlowWithLifecycle(viewModel.signOutEvent) {
+            when (it) {
+                is UiEvent.Success -> {
                     clearTaskAndStart<SigninActivity>()
                 }
                 else -> {}
@@ -48,6 +49,9 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
     private fun setEvent() {
         binding.btnPurchaseRecord.setOnClickListener {
             start<PurchaseRecordActivity>()
+        }
+        binding.btnManageReview.setOnClickListener {
+            start<ReviewManagementActivity>()
         }
     }
 
