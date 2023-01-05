@@ -1,5 +1,6 @@
 package com.jjsh.smartshopping.data.remote.response
 
+import com.google.gson.annotations.SerializedName
 import com.jjsh.smartshopping.domain.model.Purchase
 
 data class PurchaseResponse(
@@ -8,9 +9,10 @@ data class PurchaseResponse(
     val productId: Long,
     val productName: String,
     val price: Int,
-    val amount: Int
-){
+    val amount: Int,
+    @SerializedName("reviewed") val isReviewed: Boolean
+) {
     fun toPurchase() = Purchase(
-        id, category, productId, productName, price, amount
+        id, category, productId, productName, price, amount, isReviewed
     )
 }

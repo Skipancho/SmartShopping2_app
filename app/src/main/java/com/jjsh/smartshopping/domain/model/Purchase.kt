@@ -6,5 +6,6 @@ data class Purchase(
     val productId: Long,
     val productName: String,
     val price: Int,
-    val amount: Int
+    val amount: Int,
+    val isReviewed: Boolean
 )

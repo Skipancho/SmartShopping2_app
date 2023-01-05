@@ -21,9 +21,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.mypage.review.ReviewManagementActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.registration.review.ReviewRegistrationActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.ui.mypage.purchase.PurchaseRecordActivity"
             android:exported="false" />

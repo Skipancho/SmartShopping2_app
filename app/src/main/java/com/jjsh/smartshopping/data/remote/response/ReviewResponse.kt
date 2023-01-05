@@ -7,12 +7,12 @@ data class ReviewResponse(
     val id: Long,
     val purchaseId: Long,
     val nickName: String,
-    val productName: String,
+    val productId: Long,
     val score: Int,
     val reviewText: String,
     val date: Date
-){
-    fun toReview() : Review = Review(
-        id, purchaseId, nickName, productName, score, reviewText, date
+) {
+    fun toReview(productName: String, thumbnailUrl: String): Review = Review(
+        id, purchaseId, nickName, productName, score, reviewText, date, thumbnailUrl
     )
 }

@@ -22,7 +22,12 @@ class ReviewRepositoryImpl @Inject constructor(
 
     override suspend fun getReviews(productId: Long?): Result<List<Review>> {
         return remoteDataSource.getReviews(productId).mapCatching { list ->
-            list.map { it.toReview() }
+            list.map {
+                val product = remoteDataSource.getProduct(it.productId).getOrNull()
+                val productName = product?.name ?: "none"
+                val thumbnailUrl = product?.imagePaths?.firstOrNull() ?: ""
+                it.toReview(productName, thumbnailUrl)
+            }
         }
     }
 }

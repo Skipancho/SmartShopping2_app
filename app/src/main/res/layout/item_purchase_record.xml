@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:background="@color/blue_e1f5fe"
+        android:background="@{purchase.reviewed? @color/gray_828282 : @color/blue_e1f5fe}"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/layout_year_month">
 
