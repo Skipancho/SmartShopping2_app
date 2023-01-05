@@ -23,9 +23,11 @@ class GetCartItemsUseCase @Inject constructor(
             Result.success(
                 if (checkItems.isEmpty()) cartItems.map { it.setInCheckList(false) }
                 else cartItems.map { item ->
-                    if (cartItems.find { it.productId == item.productId } == null)
+                    if (checkItems.find { it.productId == item.productId } == null) {
                         item.setInCheckList(false)
-                    else item
+                    } else {
+                        item
+                    }
                 }
             )
         }.catch {
