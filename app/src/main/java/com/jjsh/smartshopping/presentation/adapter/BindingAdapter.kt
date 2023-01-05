@@ -31,3 +31,16 @@ fun TextView.setCenterLine(visible: Boolean) {
 fun TextView.setDotFormatDate(date: Date) {
     text = DateUtil.dateToString(date)
 }
+
+@BindingAdapter(
+    value = ["dividerHeight", "dividerPadding", "dividerColor"],
+    requireAll = true
+)
+fun RecyclerView.setDivider(dividerHeight: Int, dividerPadding: Int, @ColorInt dividerColor: Int?) {
+    val decoration = CustomDividerDecoration(
+        height = dividerHeight.dpToPx(),
+        padding = dividerPadding.dpToPx(),
+        colorCode = dividerColor ?: Color.TRANSPARENT
+    )
+    addItemDecoration(decoration)
+}
