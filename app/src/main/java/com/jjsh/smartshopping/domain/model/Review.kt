@@ -9,5 +9,6 @@ data class Review(
     val productName: String,
     val score: Int,
     val reviewText: String,
-    val date: Date
+    val date: Date,
+    val thumbnailUrl: String
 )
