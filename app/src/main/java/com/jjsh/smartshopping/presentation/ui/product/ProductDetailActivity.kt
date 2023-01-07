@@ -1,31 +1,38 @@
 package com.jjsh.smartshopping.presentation.ui.product
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityProductDetailBinding
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ImageViewPagerAdapter
+import com.jjsh.smartshopping.presentation.adapter.ReviewAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
+import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
+import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail) {
+class ProductDetailActivity :
+    BaseActivity<ActivityProductDetailBinding>(R.layout.activity_product_detail) {
 
     private val viewModel by viewModels<ProductDetailViewModel>()
 
     private val imageViewPagerAdapter by lazy {
         ImageViewPagerAdapter()
     }
+    private val reviewAdapter by lazy {
+        ReviewAdapter(isUserReview = false)
+    }
 
-    private var _productId : Long = -1L
+    private var _productId: Long = -1L
     private val productId get() = _productId
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +49,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
     private fun initData() {
         _productId = intent.getLongExtra(PRODUCT_ID, -1L)
         viewModel.getProduct(productId)
+        viewModel.getReviews(productId)
     }
 
     private fun initActionBar() {
@@ -57,19 +65,44 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>(R.layou
         binding.btnAddToChecklist.setOnClickListener {
             ChecklistRegistrationDialog
                 .newInstance(productId)
-                .show(supportFragmentManager,null)
+                .show(supportFragmentManager, null)
         }
 
         binding.vpDetailImage.adapter = imageViewPagerAdapter
 
-        TabLayoutMediator(binding.tlImageIndicator,binding.vpDetailImage){_,_ -> }.attach()
+        TabLayoutMediator(binding.tlImageIndicator, binding.vpDetailImage) { _, _ -> }.attach()
+
+        with(binding.rvReviewsPreview) {
+            adapter = reviewAdapter
+            layoutManager = LinearLayoutManager(context)
+            itemAnimator = null
+            addItemDecoration(
+                VerticalItemDecoration(
+                    top = 8.dpToPx(),
+                    bottom = 4.dpToPx(),
+                    width = 24.dpToPx()
+                )
+            )
+        }
     }
 
     private fun observeData() {
-        observeFlowWithLifecycle(viewModel.uiState) {
+        observeFlowWithLifecycle(viewModel.productState) {
             when (it) {
                 is UiState.Success -> {
                     imageViewPagerAdapter.setImageUrls(it.data.imagePaths)
+                }
+                is UiState.Error -> {
+                    errorHandling(it.err)
+                }
+                else -> {}
+            }
+        }
+
+        observeFlowWithLifecycle(viewModel.productReviews) {
+            when (it) {
+                is UiState.Success -> {
+                    reviewAdapter.submitList(it.data.toMutableList())
                 }
                 is UiState.Error -> {
                     errorHandling(it.err)
