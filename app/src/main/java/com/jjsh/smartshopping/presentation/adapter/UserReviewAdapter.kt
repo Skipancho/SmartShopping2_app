@@ -8,12 +8,12 @@ import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ItemUserReviewBinding
 import com.jjsh.smartshopping.domain.model.Review
 
-class ReviewAdapter(
+class UserReviewAdapter(
     private val onClick: (Review) -> Unit = {}
-) : ListAdapter<Review, ReviewAdapter.ReviewItemViewHolder>(
+) : ListAdapter<Review, UserReviewAdapter.UserReviewItemViewHolder>(
     ItemDiffCallBack<Review>(checkItemsTheSame = { old, new -> old.id == new.id })
 ) {
-    class ReviewItemViewHolder(
+    class UserReviewItemViewHolder(
         private val binding: ItemUserReviewBinding,
         private val onClick: (Review) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -25,20 +25,20 @@ class ReviewAdapter(
         }
 
         companion object {
-            fun create(parent: ViewGroup, onClick: (Review) -> Unit): ReviewItemViewHolder {
+            fun create(parent: ViewGroup, onClick: (Review) -> Unit): UserReviewItemViewHolder {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_user_review, parent, false)
                 val binding = ItemUserReviewBinding.bind(view)
-                return ReviewItemViewHolder(binding, onClick)
+                return UserReviewItemViewHolder(binding, onClick)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewItemViewHolder {
-        return ReviewItemViewHolder.create(parent, onClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserReviewItemViewHolder {
+        return UserReviewItemViewHolder.create(parent, onClick)
     }
 
-    override fun onBindViewHolder(holder: ReviewItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserReviewItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }
