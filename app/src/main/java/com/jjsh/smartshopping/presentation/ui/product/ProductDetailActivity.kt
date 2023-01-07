@@ -16,6 +16,7 @@ import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
+import com.jjsh.smartshopping.presentation.ui.product.review.ReviewActivity
 import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +45,7 @@ class ProductDetailActivity :
         initActionBar()
         initView()
         observeData()
+        setEvent()
     }
 
     private fun initData() {
@@ -59,6 +61,15 @@ class ProductDetailActivity :
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_back_24)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initView() {
@@ -112,13 +123,13 @@ class ProductDetailActivity :
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
+    private fun setEvent() {
+        binding.tvReviewTitle.setOnClickListener {
+            ReviewActivity.startReviewPage(this, productId)
         }
-        return super.onOptionsItemSelected(item)
+        binding.btnMoreReview.setOnClickListener {
+            ReviewActivity.startReviewPage(this, productId)
+        }
     }
 
     companion object {

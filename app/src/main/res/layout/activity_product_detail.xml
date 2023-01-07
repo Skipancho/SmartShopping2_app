@@ -169,6 +169,7 @@
                     tools:listitem="@layout/item_product_review" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_more_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
