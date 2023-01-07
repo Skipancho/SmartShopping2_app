@@ -12,7 +12,7 @@ import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
-import com.jjsh.smartshopping.presentation.extension.shortToast
+import com.jjsh.smartshopping.presentation.ui.registration.review.ReviewRegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +22,8 @@ class ReviewManagementActivity
     private val viewModel by viewModels<ReviewManagementViewModel>()
 
     private val reviewAdapter by lazy {
-        ReviewAdapter() {
-            shortToast("개발중")
+        ReviewAdapter {
+            ReviewRegistrationActivity.startReviewEditPage(this, it.id)
         }
     }
 
@@ -33,7 +33,10 @@ class ReviewManagementActivity
         initActionBar()
         initView()
         observeData()
+    }
 
+    override fun onResume() {
+        super.onResume()
         viewModel.getReviews()
     }
 
@@ -56,7 +59,8 @@ class ReviewManagementActivity
 
     private fun initView() {
         //val dividerDecoration = CustomDividerDecoration(2.dpToPx(),10.dpToPx(),R.color.gray_828282)
-        val itemDecoration = VerticalItemDecoration(top = 8.dpToPx(), bottom = 4.dpToPx(), width = 24.dpToPx())
+        val itemDecoration =
+            VerticalItemDecoration(top = 8.dpToPx(), bottom = 4.dpToPx(), width = 24.dpToPx())
         with(binding.rvReviews) {
             adapter = reviewAdapter
             layoutManager = LinearLayoutManager(this@ReviewManagementActivity)
@@ -67,8 +71,8 @@ class ReviewManagementActivity
     }
 
     private fun observeData() {
-        observeFlowWithLifecycle(viewModel.reviews){
-            when(it){
+        observeFlowWithLifecycle(viewModel.reviews) {
+            when (it) {
                 is UiState.Success -> {
                     reviewAdapter.submitList(it.data.toMutableList())
                 }

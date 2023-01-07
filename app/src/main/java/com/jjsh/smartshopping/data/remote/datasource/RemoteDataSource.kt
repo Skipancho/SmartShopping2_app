@@ -38,11 +38,23 @@ interface RemoteDataSource {
         year: Int, month: Int
     ): Result<List<PurchaseResponse>>
 
+    suspend fun getReview(
+        reviewId: Long
+    ): Result<ReviewResponse>
+
     suspend fun writeReview(
         reviewRequest: ReviewRequest
-    ) : Result<Unit>
+    ): Result<Unit>
+
+    suspend fun updateReview(
+        reviewRequest: ReviewRequest
+    ): Result<Unit>
+
+    suspend fun deleteReview(
+        reviewId: Long
+    ): Result<Unit>
 
     suspend fun getReviews(
         productId: Long?
-    ) : Result<List<ReviewResponse>>
+    ): Result<List<ReviewResponse>>
 }

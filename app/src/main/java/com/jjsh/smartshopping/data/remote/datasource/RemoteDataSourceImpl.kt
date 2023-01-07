@@ -25,6 +25,7 @@ class RemoteDataSourceImpl @Inject constructor(
     private val reviewService: ReviewService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : RemoteDataSource {
+
     override suspend fun signin(signinRequest: SigninRequest): Result<SigninResponse> {
         return withContext(ioDispatcher) {
             runCatching {
@@ -112,10 +113,36 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getReview(reviewId: Long): Result<ReviewResponse> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                val response = reviewService.getReview(reviewId)
+                response.successOrThrow()
+                response.getOrThrow(ErrorException.ReviewException)
+            }
+        }
+    }
+
     override suspend fun writeReview(reviewRequest: ReviewRequest): Result<Unit> {
         return withContext(ioDispatcher) {
             runCatching {
                 reviewService.writeReview(reviewRequest).successOrThrow()
+            }
+        }
+    }
+
+    override suspend fun updateReview(reviewRequest: ReviewRequest): Result<Unit> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                reviewService.updateReview(reviewRequest).successOrThrow()
+            }
+        }
+    }
+
+    override suspend fun deleteReview(reviewId: Long): Result<Unit> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                reviewService.deleteReview(reviewId).successOrThrow()
             }
         }
     }

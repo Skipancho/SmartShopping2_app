@@ -12,7 +12,6 @@ import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
 import com.jjsh.smartshopping.presentation.extension.errorHandling
-import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.registration.review.ReviewRegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +23,7 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
     private val purchaseAdapter by lazy {
         PurchaseRecordAdapter {
             if (!it.isReviewed)
-                startReviewActivity(it.id, it.productId)
+                ReviewRegistrationActivity.startReviewWritePage(this, it.id, it.productId)
         }
     }
 
@@ -80,13 +79,6 @@ class PurchaseRecordActivity : BaseActivity<ActivityPurchaseRecordBinding>(R.lay
                 }
                 else -> {}
             }
-        }
-    }
-
-    private fun startReviewActivity(purchaseId: Long, productId: Long) {
-        start<ReviewRegistrationActivity> {
-            it.putExtra(ReviewRegistrationActivity.PURCHASE_ID, purchaseId)
-            it.putExtra(ReviewRegistrationActivity.PRODUCT_ID, productId)
         }
     }
 }
