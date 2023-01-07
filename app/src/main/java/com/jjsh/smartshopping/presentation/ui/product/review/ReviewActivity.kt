@@ -1,30 +1,31 @@
-package com.jjsh.smartshopping.presentation.ui.mypage.review
+package com.jjsh.smartshopping.presentation.ui.product.review
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjsh.smartshopping.R
-import com.jjsh.smartshopping.databinding.ActivityReviewManagementBinding
+import com.jjsh.smartshopping.databinding.ActivityReviewBinding
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ReviewAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
-import com.jjsh.smartshopping.presentation.extension.errorHandling
-import com.jjsh.smartshopping.presentation.ui.registration.review.ReviewRegistrationActivity
+import com.jjsh.smartshopping.presentation.extension.start
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class ReviewManagementActivity
-    : BaseActivity<ActivityReviewManagementBinding>(R.layout.activity_review_management) {
+class ReviewActivity : BaseActivity<ActivityReviewBinding>(R.layout.activity_review) {
 
-    private val viewModel by viewModels<ReviewManagementViewModel>()
+    private var productId: Long by Delegates.notNull()
+
+    private val viewModel by viewModels<ReviewViewModel>()
 
     private val reviewAdapter by lazy {
-        ReviewAdapter ({
-            ReviewRegistrationActivity.startReviewEditPage(this, it.id)
-        })
+        ReviewAdapter(isUserReview = false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,17 +33,14 @@ class ReviewManagementActivity
 
         initActionBar()
         initView()
+        getData()
         observeData()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getReviews()
     }
 
     private fun initActionBar() {
         setSupportActionBar(binding.mtbToolbar)
         supportActionBar?.run {
+            title = ""
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_back_24)
         }
@@ -58,28 +56,54 @@ class ReviewManagementActivity
     }
 
     private fun initView() {
-        //val dividerDecoration = CustomDividerDecoration(2.dpToPx(),10.dpToPx(),R.color.gray_828282)
-        val itemDecoration =
-            VerticalItemDecoration(top = 8.dpToPx(), bottom = 4.dpToPx(), width = 24.dpToPx())
-        with(binding.rvReviews) {
+        with(binding.rvReviews){
             adapter = reviewAdapter
-            layoutManager = LinearLayoutManager(this@ReviewManagementActivity)
+            layoutManager = LinearLayoutManager(context)
             itemAnimator = null
-            //addItemDecoration(dividerDecoration)
-            addItemDecoration(itemDecoration)
+            addItemDecoration(
+                VerticalItemDecoration(
+                    top = 8.dpToPx(),
+                    bottom = 4.dpToPx(),
+                    width = 24.dpToPx()
+                )
+            )
         }
+    }
+
+    private fun getData() {
+        productId = intent.getLongExtra(PRODUCT_ID, -1L)
+
+        if (productId == -1L) {
+            finish()
+            return
+        }
+
+        viewModel.getReviews(productId)
     }
 
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.reviews) {
             when (it) {
                 is UiState.Success -> {
-                    reviewAdapter.submitList(it.data.toMutableList())
+                    if (it.data.isNotEmpty()){
+                        reviewAdapter.submitList(it.data)
+                    }
+                    binding.rvReviews.isVisible = it.data.isNotEmpty()
+                    binding.tvEmpty.isVisible = it.data.isEmpty()
                 }
                 is UiState.Error -> {
-                    errorHandling(it.err)
+
                 }
                 else -> {}
+            }
+        }
+    }
+
+    companion object {
+        private const val PRODUCT_ID = "product_id"
+        fun startReviewPage(context: Context, productId: Long) {
+            context.start<ReviewActivity> {
+                it.putExtra(PRODUCT_ID, productId)
             }
         }
     }

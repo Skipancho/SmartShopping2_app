@@ -30,7 +30,7 @@
                 android:layout_height="?attr/actionBarSize" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/btn_add_to_checklist"
@@ -141,8 +141,44 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_item_s_price"
                     tools:text="상품 설명" />
 
+                <TextView
+                    android:id="@+id/tv_review_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical"
+                    android:padding="16sp"
+                    android:text="상품평"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:drawableEndCompat="@drawable/ic_right_24"
+                    app:drawableTint="@color/gray_828282"
+                    app:layout_constraintBottom_toTopOf="@id/rv_reviews_preview"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reviews_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:dividerColor="@{@color/gray_828282}"
+                    app:dividerHeight="@{1}"
+                    app:dividerPadding="@{16}"
+                    app:layout_constraintTop_toBottomOf="@id/tv_review_title"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_product_review" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_more_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="4dp"
+                    android:padding="4dp"
+                    android:text="리뷰 모두 보기"
+                    app:layout_constraintTop_toBottomOf="@id/rv_reviews_preview" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <Button
             android:id="@+id/btn_add_to_checklist"
@@ -152,6 +188,7 @@
             android:layout_marginVertical="4dp"
             android:padding="4dp"
             android:text="@string/text_add_to_checklist"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

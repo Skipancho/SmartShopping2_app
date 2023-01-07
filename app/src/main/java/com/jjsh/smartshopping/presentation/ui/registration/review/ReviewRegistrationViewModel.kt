@@ -2,7 +2,6 @@ package com.jjsh.smartshopping.presentation.ui.registration.review
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.repository.ProductRepository
 import com.jjsh.smartshopping.domain.repository.ReviewRepository
 import com.jjsh.smartshopping.presentation.UiState
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class ReviewRegistrationViewModel @Inject constructor(
@@ -21,6 +19,7 @@ class ReviewRegistrationViewModel @Inject constructor(
 
     private var productId: Long = -1L
     private var purchaseId: Long = -1L
+    private var reviewId: Long = -1L
 
     private var _editMode = MutableStateFlow(false)
     val editMode: StateFlow<Boolean> get() = _editMode
@@ -56,6 +55,7 @@ class ReviewRegistrationViewModel @Inject constructor(
     }
 
     fun getReview(reviewId: Long) {
+        this.reviewId = reviewId
         _editMode.value = true
         _showScoreFragment.value = false
         viewModelScope.launch {
@@ -82,7 +82,7 @@ class ReviewRegistrationViewModel @Inject constructor(
     }
 
     fun reviewBtnEvent() {
-        when(editMode.value) {
+        when (editMode.value) {
             true -> editReview()
             false -> writeReview()
         }
@@ -119,6 +119,20 @@ class ReviewRegistrationViewModel @Inject constructor(
             }.onFailure {
                 _uiState.value = UiState.Error(it)
             }
+        }
+    }
+
+    fun deleteReview() {
+        if (uiState.value is UiState.Loading) return
+        if (reviewId == -1L) return
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            reviewRepository.deleteReview(reviewId)
+                .onSuccess {
+                    _uiState.value = UiState.Success(it)
+                }.onFailure {
+                    _uiState.value = UiState.Error(it)
+                }
         }
     }
 }
