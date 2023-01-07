@@ -19,10 +19,17 @@ class ReviewRegistrationViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ) : ViewModel() {
 
+    private var productId: Long = -1L
     private var purchaseId: Long = -1L
 
-    private val _currentProduct = MutableStateFlow(Product.nullProduct)
-    val currentProduct: StateFlow<Product> get() = _currentProduct
+    private var _editMode = MutableStateFlow(false)
+    val editMode: StateFlow<Boolean> get() = _editMode
+
+    private val _productName = MutableStateFlow("")
+    val productName: StateFlow<String> get() = _productName
+
+    private val _thumbnailUrl = MutableStateFlow("")
+    val thumbnailUrl: StateFlow<String> get() = _thumbnailUrl
 
     private val _reviewScore = MutableStateFlow(0)
     val reviewScore: StateFlow<Int> get() = _reviewScore
@@ -33,14 +40,34 @@ class ReviewRegistrationViewModel @Inject constructor(
     val reviewText = MutableStateFlow("")
 
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Init)
-    val uiState : StateFlow<UiState<Unit>> get() = _uiState
+    val uiState: StateFlow<UiState<Unit>> get() = _uiState
 
     fun getProduct(productId: Long, purchaseId: Long) {
+        this.productId = productId
         this.purchaseId = purchaseId
+        _editMode.value = false
         viewModelScope.launch {
             productRepository.getProductItem(productId)
                 .onSuccess {
-                    _currentProduct.value = it
+                    _productName.value = it.name
+                    _thumbnailUrl.value = it.thumbnailPath
+                }
+        }
+    }
+
+    fun getReview(reviewId: Long) {
+        _editMode.value = true
+        _showScoreFragment.value = false
+        viewModelScope.launch {
+            reviewRepository.getReview(reviewId)
+                .onSuccess {
+                    purchaseId = it.purchaseId
+                    _productName.value = it.productName
+                    _thumbnailUrl.value = it.thumbnailUrl
+                    _reviewScore.value = it.score
+                    reviewText.value = it.reviewText
+                }.onFailure {
+                    _uiState.value = UiState.Error(it)
                 }
         }
     }
@@ -54,12 +81,36 @@ class ReviewRegistrationViewModel @Inject constructor(
         _showScoreFragment.value = true
     }
 
-    fun writeReview() {
+    fun reviewBtnEvent() {
+        when(editMode.value) {
+            true -> editReview()
+            false -> writeReview()
+        }
+    }
+
+    private fun writeReview() {
         if (uiState.value is UiState.Loading) return
         viewModelScope.launch {
             _uiState.value = UiState.Loading
             reviewRepository.writeReview(
-                productId = currentProduct.value.id,
+                productId = productId,
+                purchaseId = purchaseId,
+                score = reviewScore.value,
+                reviewText = reviewText.value
+            ).onSuccess {
+                _uiState.value = UiState.Success(it)
+            }.onFailure {
+                _uiState.value = UiState.Error(it)
+            }
+        }
+    }
+
+    private fun editReview() {
+        if (uiState.value is UiState.Loading) return
+        viewModelScope.launch {
+            _uiState.value = UiState.Loading
+            reviewRepository.updateReview(
+                productId = productId,
                 purchaseId = purchaseId,
                 score = reviewScore.value,
                 reviewText = reviewText.value

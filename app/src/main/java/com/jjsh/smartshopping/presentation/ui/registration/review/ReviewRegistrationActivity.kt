@@ -1,5 +1,6 @@
 package com.jjsh.smartshopping.presentation.ui.registration.review
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -10,11 +11,16 @@ import com.jjsh.smartshopping.databinding.ActivityReviewRegistrationBinding
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.errorHandling
+import com.jjsh.smartshopping.presentation.extension.start
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.properties.Delegates
 
 @AndroidEntryPoint
-class ReviewRegistrationActivity : BaseActivity<ActivityReviewRegistrationBinding>(R.layout.activity_review_registration) {
+class ReviewRegistrationActivity :
+    BaseActivity<ActivityReviewRegistrationBinding>(R.layout.activity_review_registration) {
+
+    private var _reviewId = -1L
+    private val reviewId : Long get() = _reviewId
 
     private var purchaseId: Long by Delegates.notNull<Long>()
     private var productId: Long by Delegates.notNull<Long>()
@@ -35,13 +41,19 @@ class ReviewRegistrationActivity : BaseActivity<ActivityReviewRegistrationBindin
     }
 
     private fun getIdsFromIntent() {
-        purchaseId = intent.getLongExtra(PURCHASE_ID, -1L)
-        productId = intent.getLongExtra(PRODUCT_ID, -1L)
+        _reviewId = intent.getLongExtra(REVIEW_ID, -1L)
 
-        if (productId == -1L || purchaseId == -1L) {
-            finish()
+        if (reviewId == -1L) {
+            purchaseId = intent.getLongExtra(PURCHASE_ID, -1L)
+            productId = intent.getLongExtra(PRODUCT_ID, -1L)
+
+            if (productId == -1L || purchaseId == -1L) {
+                finish()
+            }
+            viewModel.getProduct(productId, purchaseId)
+        }else {
+            viewModel.getReview(reviewId)
         }
-        viewModel.getProduct(productId, purchaseId)
     }
 
     private fun showScoreFragment() {
@@ -108,5 +120,18 @@ class ReviewRegistrationActivity : BaseActivity<ActivityReviewRegistrationBindin
     companion object {
         const val PURCHASE_ID = "purchase_id"
         const val PRODUCT_ID = "product_id"
+        const val REVIEW_ID = "review_id"
+        fun startReviewWritePage(context: Context, purchaseId: Long, productId: Long) {
+            context.start<ReviewRegistrationActivity> {
+                it.putExtra(PURCHASE_ID, purchaseId)
+                it.putExtra(PRODUCT_ID, productId)
+            }
+        }
+
+        fun startReviewEditPage(context: Context, reviewId: Long) {
+            context.start<ReviewRegistrationActivity> {
+                it.putExtra(REVIEW_ID,reviewId)
+            }
+        }
     }
 }
