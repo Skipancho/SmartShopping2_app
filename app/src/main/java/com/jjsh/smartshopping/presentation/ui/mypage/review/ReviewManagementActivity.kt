@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityReviewManagementBinding
 import com.jjsh.smartshopping.presentation.UiState
-import com.jjsh.smartshopping.presentation.adapter.UserReviewAdapter
+import com.jjsh.smartshopping.presentation.adapter.ReviewAdapter
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.decoration.VerticalItemDecoration
 import com.jjsh.smartshopping.presentation.extension.dpToPx
@@ -22,9 +22,9 @@ class ReviewManagementActivity
     private val viewModel by viewModels<ReviewManagementViewModel>()
 
     private val reviewAdapter by lazy {
-        UserReviewAdapter {
+        ReviewAdapter ({
             ReviewRegistrationActivity.startReviewEditPage(this, it.id)
-        }
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
