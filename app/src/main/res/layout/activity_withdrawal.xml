@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jjsh.smartshopping.presentation.ui.mypage.withdrawal.WithdrawalViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -33,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/pink_f48fb1"
-                app:title="회원 탈퇴"
+                app:title="@string/text_withdrawal"
                 app:titleCentered="true" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -41,45 +48,48 @@
             android:id="@+id/tv_withdrawal_guide"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_rect_stroke_20_radius_14_9dc7fa"
             android:padding="16dp"
-            android:text="회원 탈퇴 시 본 애플리케이션을 사용할 수 없으며 고객님의 정보는 즉각 삭제되니 안심하길 바라~^^"
-            app:layout_constraintTop_toBottomOf="@id/layout_appbar"
-            app:layout_constraintStart_toEndOf="@id/gl_start"
+            android:text="@string/text_withdrawal_guide"
             app:layout_constraintEnd_toStartOf="@id/gl_end"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintStart_toEndOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/layout_appbar" />
 
         <TextView
             android:id="@+id/tv_withdrawal_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="탈퇴 조항 동의" 
-            app:layout_constraintTop_toTopOf="@id/cb_withdrawal_agree"
+            android:text="@string/text_agree_withdrawal_guide"
             app:layout_constraintBottom_toBottomOf="@id/cb_withdrawal_agree"
-            app:layout_constraintEnd_toStartOf="@id/cb_withdrawal_agree"/>
+            app:layout_constraintEnd_toStartOf="@id/cb_withdrawal_agree"
+            app:layout_constraintTop_toTopOf="@id/cb_withdrawal_agree" />
 
         <CheckBox
             android:id="@+id/cb_withdrawal_agree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="@={viewModel.agreeToWithdrawal}"
             app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal_guide"/>
-        
+            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal_guide" />
+
         <androidx.appcompat.widget.AppCompatEditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/cb_withdrawal_agree"
-            app:layout_constraintStart_toEndOf="@id/gl_start"
-            app:layout_constraintEnd_toStartOf="@id/gl_end"
             android:layout_marginTop="30dp"
-            android:hint="아이디를 입력하세요."/>
+            android:hint="@string/text_input_id"
+            android:text="@={viewModel.userIdText}"
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/gl_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_withdrawal_agree" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginVertical="20dp"
-            android:text="탈퇴하기"
+            android:onClick="@{() -> viewModel.withdrawal()}"
+            android:text="@string/text_do_withdrawal"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,7 +61,9 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun withdrawal(userId: String): Result<Unit> {
         return runCatching {
             if (userId != auth.userId) throw ErrorException.UserIdDiffException
-            remoteDataSource.withdrawal().getOrThrow()
+            remoteDataSource.withdrawal()
+                .onSuccess { signOut() }
+                .getOrThrow()
         }
     }
 }
