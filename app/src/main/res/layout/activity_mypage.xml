@@ -120,7 +120,7 @@
             android:text="리뷰 관리"
             android:textSize="20sp"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_user_info"
+            android:id="@+id/btn_withdrawal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"

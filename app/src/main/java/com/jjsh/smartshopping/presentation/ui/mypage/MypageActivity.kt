@@ -11,6 +11,7 @@ import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.mypage.purchase.PurchaseRecordActivity
 import com.jjsh.smartshopping.presentation.ui.mypage.review.ReviewManagementActivity
+import com.jjsh.smartshopping.presentation.ui.mypage.withdrawal.WithdrawalActivity
 import com.jjsh.smartshopping.presentation.ui.signin.SigninActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +53,9 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
         }
         binding.btnManageReview.setOnClickListener {
             start<ReviewManagementActivity>()
+        }
+        binding.btnWithdrawal.setOnClickListener {
+            start<WithdrawalActivity>()
         }
     }
 

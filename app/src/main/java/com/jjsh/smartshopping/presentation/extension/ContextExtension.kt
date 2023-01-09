@@ -45,6 +45,9 @@ fun Context.errorHandling(e: Throwable) {
         is ErrorException.UserIdDiffException -> {
             shortToast(getString(R.string.err_msg_id_diff))
         }
+        is ErrorException.DisagreeException -> {
+            shortToast(getString(R.string.err_disagree))
+        }
         else -> {
             shortToast(getString(R.string.err_msg_unknown))
         }
