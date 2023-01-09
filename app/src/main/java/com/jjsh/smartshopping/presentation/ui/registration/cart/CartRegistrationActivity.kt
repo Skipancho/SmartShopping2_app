@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityCartRegistrationBinding
-import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.errorHandling
@@ -75,12 +74,13 @@ class CartRegistrationActivity :
     private fun observeAddCartEvent() {
         observeFlowWithLifecycle(viewModel.addCartItemEvent) {
             when(it) {
-                is UiEvent.Success -> {
+                is UiState.Success -> {
                     shortToast("${it.data}을 장바구니에 추가했습니다.")
                 }
-                is UiEvent.Error -> {
+                is UiState.Error -> {
                     errorHandling(it.err)
                 }
+                else -> {}
             }
         }
     }

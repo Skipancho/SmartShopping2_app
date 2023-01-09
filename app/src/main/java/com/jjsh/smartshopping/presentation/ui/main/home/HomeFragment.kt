@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.FragmentHomeBinding
-import com.jjsh.smartshopping.presentation.UiEvent
+import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.adapter.ProductAdapter
 import com.jjsh.smartshopping.presentation.base.BaseFragment
 import com.jjsh.smartshopping.presentation.extension.errorHandling
 import com.jjsh.smartshopping.presentation.extension.start
 import com.jjsh.smartshopping.presentation.ui.product.ProductDetailActivity
-import com.jjsh.smartshopping.presentation.ui.registration.checklist.ChecklistRegistrationDialog
 import com.jjsh.smartshopping.presentation.ui.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -59,13 +58,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.products) {
             when (it) {
-                is UiEvent.Success -> {
+                is UiState.Success -> {
                     Timber.e("list size : ${it.data.size}")
                     productAdapter.submitList(it.data.toMutableList())
                 }
-                is UiEvent.Error -> {
+                is UiState.Error -> {
                     requireContext().errorHandling(it.err)
                 }
+                else -> {}
             }
         }
         observeFlowWithLifecycle(viewModel.moveToSearchEvent) {

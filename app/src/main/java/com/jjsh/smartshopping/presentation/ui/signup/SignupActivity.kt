@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivitySignupBinding
-import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.errorHandling
@@ -45,23 +44,25 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
             }
             observeFlowWithLifecycle(idCheckEvent) {
                 when (it) {
-                    is UiEvent.Success -> {
+                    is UiState.Success -> {
                         shortToast(getString(R.string.toast_msg_id_checked))
                     }
-                    is UiEvent.Error -> {
+                    is UiState.Error -> {
                         errorHandling(it.err)
                     }
+                    else -> {}
                 }
                 viewModel.initUiState()
             }
             observeFlowWithLifecycle(nickNameCheckEvent) {
                 when (it) {
-                    is UiEvent.Success -> {
+                    is UiState.Success -> {
                         shortToast(getString(R.string.toast_msg_nickname_checked))
                     }
-                    is UiEvent.Error -> {
+                    is UiState.Error -> {
                         errorHandling(it.err)
                     }
+                    else -> {}
                 }
                 viewModel.initUiState()
             }
@@ -88,7 +89,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
