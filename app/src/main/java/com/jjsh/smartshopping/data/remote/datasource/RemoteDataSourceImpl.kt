@@ -60,6 +60,14 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun withdrawal(): Result<Unit> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                authService.withdrawal().successOrThrow()
+            }
+        }
+    }
+
     override suspend fun getProduct(id: Long): Result<ProductResponse> {
         return withContext(ioDispatcher) {
             runCatching {

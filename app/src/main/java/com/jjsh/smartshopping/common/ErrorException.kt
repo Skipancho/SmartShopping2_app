@@ -8,5 +8,6 @@ sealed class ErrorException : RuntimeException() {
     object ProductException : ErrorException()
     object PurchaseException : ErrorException()
     object ReviewException : ErrorException()
+    object UserIdDiffException : ErrorException()
     data class DefaultException(val msg: String?) : ErrorException()
 }

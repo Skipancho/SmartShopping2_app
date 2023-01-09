@@ -5,6 +5,7 @@ import com.jjsh.smartshopping.data.remote.request.SigninRequest
 import com.jjsh.smartshopping.data.remote.request.SignupRequest
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -17,15 +18,18 @@ interface AuthService {
     @POST("/api/v1/users")
     suspend fun signup(
         @Body signupRequest: SignupRequest
-    ) : ApiResponse<Unit>
+    ): ApiResponse<Unit>
 
     @POST("/api/v1/users/id")
     suspend fun validateUserId(
-        @Query("userId") userId : String
-    ) : ApiResponse<Unit>
+        @Query("userId") userId: String
+    ): ApiResponse<Unit>
 
     @POST("/api/v1/users/nickname")
     suspend fun validateNickName(
-        @Query("nickName") nickName : String
-    ) : ApiResponse<Unit>
+        @Query("nickName") nickName: String
+    ): ApiResponse<Unit>
+
+    @DELETE("/api/v1/users")
+    suspend fun withdrawal(): ApiResponse<Unit>
 }

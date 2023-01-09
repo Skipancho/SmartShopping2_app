@@ -19,6 +19,8 @@ interface RemoteDataSource {
 
     suspend fun validateNickName(nickName: String): Result<Unit>
 
+    suspend fun withdrawal(): Result<Unit> //회원 탈퇴
+
     suspend fun getProduct(id: Long): Result<ProductResponse>
 
     suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse>

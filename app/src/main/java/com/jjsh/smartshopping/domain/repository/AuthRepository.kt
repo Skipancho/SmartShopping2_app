@@ -21,4 +21,6 @@ interface AuthRepository {
     suspend fun validateUserId(userId: String): Result<Unit>
 
     suspend fun validateNickName(nickName: String): Result<Unit>
+
+    suspend fun withdrawal(userId: String): Result<Unit>
 }

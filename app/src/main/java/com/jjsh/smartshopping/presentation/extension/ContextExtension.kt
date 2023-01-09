@@ -42,6 +42,9 @@ fun Context.errorHandling(e: Throwable) {
         is ErrorException.EmptyMemberException -> {
             shortToast(getString(R.string.err_msg_empty_member))
         }
+        is ErrorException.UserIdDiffException -> {
+            shortToast(getString(R.string.err_msg_id_diff))
+        }
         else -> {
             shortToast(getString(R.string.err_msg_unknown))
         }
