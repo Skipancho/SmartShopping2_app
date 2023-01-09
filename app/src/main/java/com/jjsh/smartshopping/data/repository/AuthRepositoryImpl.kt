@@ -1,5 +1,6 @@
 package com.jjsh.smartshopping.data.repository
 
+import com.jjsh.smartshopping.common.ErrorException
 import com.jjsh.smartshopping.data.auth.Auth
 import com.jjsh.smartshopping.data.remote.datasource.RemoteDataSource
 import com.jjsh.smartshopping.data.remote.request.SigninRequest
@@ -55,5 +56,14 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun validateNickName(nickName: String): Result<Unit> {
         return remoteDataSource.validateNickName(nickName)
+    }
+
+    override suspend fun withdrawal(userId: String): Result<Unit> {
+        return runCatching {
+            if (userId != auth.userId) throw ErrorException.UserIdDiffException
+            remoteDataSource.withdrawal()
+                .onSuccess { signOut() }
+                .getOrThrow()
+        }
     }
 }
