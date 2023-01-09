@@ -6,7 +6,6 @@ import com.jjsh.smartshopping.common.ErrorException
 import com.jjsh.smartshopping.domain.usecase.SignupUseCase
 import com.jjsh.smartshopping.domain.usecase.ValidateNickNameUseCase
 import com.jjsh.smartshopping.domain.usecase.ValidateUserIdUseCase
-import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -33,10 +32,10 @@ class SignupViewModel @Inject constructor(
     private val _nickNameChecked = MutableStateFlow(true)
     val nickNameChecked: StateFlow<Boolean> get() = _nickNameChecked
 
-    private val _idCheckEvent = MutableSharedFlow<UiEvent<Unit>>()
-    val idCheckEvent: SharedFlow<UiEvent<Unit>> get() = _idCheckEvent
-    private val _nickNameCheckEvent = MutableSharedFlow<UiEvent<Unit>>()
-    val nickNameCheckEvent: SharedFlow<UiEvent<Unit>> get() = _nickNameCheckEvent
+    private val _idCheckEvent = MutableSharedFlow<UiState<Unit>>()
+    val idCheckEvent: SharedFlow<UiState<Unit>> get() = _idCheckEvent
+    private val _nickNameCheckEvent = MutableSharedFlow<UiState<Unit>>()
+    val nickNameCheckEvent: SharedFlow<UiState<Unit>> get() = _nickNameCheckEvent
 
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Init)
     val uiState: StateFlow<UiState<Unit>> get() = _uiState
@@ -81,10 +80,10 @@ class SignupViewModel @Inject constructor(
             _uiState.value = UiState.Loading
             validateUserIdUseCase(userId.value)
                 .onSuccess {
-                    _idCheckEvent.emit(UiEvent.Success(it))
+                    _idCheckEvent.emit(UiState.Success(it))
                     _idChecked.value = true
                 }.onFailure {
-                    _idCheckEvent.emit(UiEvent.Error(it))
+                    _idCheckEvent.emit(UiState.Error(it))
                     _idChecked.value = false
                 }
         }
@@ -95,10 +94,10 @@ class SignupViewModel @Inject constructor(
             _uiState.value = UiState.Loading
             validateNickNameUseCase(nickName.value)
                 .onSuccess {
-                    _nickNameCheckEvent.emit(UiEvent.Success(it))
+                    _nickNameCheckEvent.emit(UiState.Success(it))
                     _nickNameChecked.value = true
                 }.onFailure {
-                    _nickNameCheckEvent.emit(UiEvent.Error(it))
+                    _nickNameCheckEvent.emit(UiState.Error(it))
                     _nickNameChecked.value = false
                 }
         }

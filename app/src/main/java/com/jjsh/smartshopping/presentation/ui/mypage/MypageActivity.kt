@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jjsh.smartshopping.R
 import com.jjsh.smartshopping.databinding.ActivityMypageBinding
-import com.jjsh.smartshopping.presentation.UiEvent
+import com.jjsh.smartshopping.presentation.UiState
 import com.jjsh.smartshopping.presentation.base.BaseActivity
 import com.jjsh.smartshopping.presentation.extension.clearTaskAndStart
 import com.jjsh.smartshopping.presentation.extension.start
@@ -39,7 +39,7 @@ class MypageActivity : BaseActivity<ActivityMypageBinding>(R.layout.activity_myp
     private fun observeData() {
         observeFlowWithLifecycle(viewModel.signOutEvent) {
             when (it) {
-                is UiEvent.Success -> {
+                is UiState.Success -> {
                     clearTaskAndStart<SigninActivity>()
                 }
                 else -> {}

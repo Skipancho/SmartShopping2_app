@@ -8,7 +8,7 @@ import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.model.toCheckItem
 import com.jjsh.smartshopping.domain.repository.CheckItemRepository
 import com.jjsh.smartshopping.domain.repository.ProductRepository
-import com.jjsh.smartshopping.presentation.UiEvent
+import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,11 +24,11 @@ class ChecklistRegistrationViewModel @Inject constructor(
     private val checkItemRepository: CheckItemRepository
 ) : ViewModel() {
 
-    private val _getProductEvent = MutableSharedFlow<UiEvent<Product>>()
-    val getProductEvent: SharedFlow<UiEvent<Product>> get() = _getProductEvent
+    private val _getProductEvent = MutableSharedFlow<UiState<Product>>()
+    val getProductEvent: SharedFlow<UiState<Product>> get() = _getProductEvent
 
-    private val _addCheckItemEvent = MutableSharedFlow<UiEvent<Unit>>()
-    val addCheckItemEvent: SharedFlow<UiEvent<Unit>> get() = _addCheckItemEvent
+    private val _addCheckItemEvent = MutableSharedFlow<UiState<Unit>>()
+    val addCheckItemEvent: SharedFlow<UiState<Unit>> get() = _addCheckItemEvent
 
     private val _currentProduct = MutableLiveData<Product>()
     val currentProduct: LiveData<Product> get() = _currentProduct
@@ -44,12 +44,12 @@ class ChecklistRegistrationViewModel @Inject constructor(
         viewModelScope.launch {
             productRepository.getProductItem(productId)
                 .onSuccess {
-                    _getProductEvent.emit(UiEvent.Success(it))
+                    _getProductEvent.emit(UiState.Success(it))
                     _currentProduct.postValue(it)
                     _amount.value = 1
                     _totalPrice.value = it.sPrice
                 }.onFailure {
-                    _getProductEvent.emit(UiEvent.Error(it))
+                    _getProductEvent.emit(UiState.Error(it))
                 }
         }
     }
@@ -59,10 +59,10 @@ class ChecklistRegistrationViewModel @Inject constructor(
             currentProduct.value?.let { product ->
                 checkItemRepository.insertCheckItem(product.toCheckItem(amount.value))
                     .onSuccess {
-                        _addCheckItemEvent.emit(UiEvent.Success(it))
+                        _addCheckItemEvent.emit(UiState.Success(it))
                         Timber.d("success")
                     }.onFailure {
-                        _addCheckItemEvent.emit(UiEvent.Error(it))
+                        _addCheckItemEvent.emit(UiState.Error(it))
                         Timber.e("error")
                     }
             }

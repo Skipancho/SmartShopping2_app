@@ -8,7 +8,6 @@ import com.jjsh.smartshopping.domain.model.Product
 import com.jjsh.smartshopping.domain.model.toCartItem
 import com.jjsh.smartshopping.domain.repository.CartItemRepository
 import com.jjsh.smartshopping.domain.repository.ProductRepository
-import com.jjsh.smartshopping.presentation.UiEvent
 import com.jjsh.smartshopping.presentation.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,8 +29,8 @@ class CartRegistrationViewModel @Inject constructor(
     private val _currentProduct = MutableStateFlow<UiState<Product>>(UiState.Init)
     val currentProduct : StateFlow<UiState<Product>> get() = _currentProduct
 
-    private val _addCartItemEvent = MutableSharedFlow<UiEvent<String>>()
-    val addCartItemEvent : SharedFlow<UiEvent<String>> get() = _addCartItemEvent
+    private val _addCartItemEvent = MutableSharedFlow<UiState<String>>()
+    val addCartItemEvent : SharedFlow<UiState<String>> get() = _addCartItemEvent
 
     private val _productToShow = MutableLiveData<Product>(Product.nullProduct)
     val productToShow : LiveData<Product> get() = _productToShow
@@ -68,12 +67,11 @@ class CartRegistrationViewModel @Inject constructor(
         viewModelScope.launch {
             cartItemRepository.insertCartItem(product.toCartItem(1))
                 .onSuccess {
-                    _addCartItemEvent.emit(UiEvent.Success(product.name))
+                    _addCartItemEvent.emit(UiState.Success(product.name))
                     initCurrentBarcode()
                 }.onFailure {
-                    _addCartItemEvent.emit(UiEvent.Error(it))
+                    _addCartItemEvent.emit(UiState.Error(it))
                 }
         }
     }
-
 }
