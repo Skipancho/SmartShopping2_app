@@ -41,6 +41,14 @@ class ReviewRegistrationViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState<Unit>>(UiState.Init)
     val uiState: StateFlow<UiState<Unit>> get() = _uiState
 
+    val starTouchDown: (Int) -> Unit = {
+        _reviewScore.value = it
+    }
+
+    val starTouchUp: (Int) -> Unit = {
+        setScore(it)
+    }
+
     fun getProduct(productId: Long, purchaseId: Long) {
         this.productId = productId
         this.purchaseId = purchaseId
@@ -72,7 +80,7 @@ class ReviewRegistrationViewModel @Inject constructor(
         }
     }
 
-    fun setScore(score: Int) {
+    private fun setScore(score: Int) {
         _reviewScore.value = score
         _showScoreFragment.value = false
     }
