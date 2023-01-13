@@ -24,4 +24,8 @@ class FakeAuthService(
     override suspend fun validateNickName(nickName: String): ApiResponse<Unit> {
         return ApiResponse(true)
     }
+
+    override suspend fun withdrawal(): ApiResponse<Unit> {
+        return ApiResponse(true)
+    }
 }
