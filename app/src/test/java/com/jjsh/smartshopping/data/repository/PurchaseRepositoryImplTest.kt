@@ -59,10 +59,10 @@ internal class PurchaseRepositoryImplTest {
             val expected = Result.success(
                 listOf(
                     Purchase(
-                        1L, "category1", 1L, "name1", 10000, 1
+                        1L, "category1", 1L, "name1", 10000, 1, false
                     ),
                     Purchase(
-                        2L, "category2", 2L, "name2", 9000, 10
+                        2L, "category2", 2L, "name2", 9000, 10, false
                     )
                 )
             )
