@@ -42,11 +42,16 @@ class FakeRemoteDataSource : RemoteDataSource {
     }
 
     override suspend fun getProduct(id: Long): Result<ProductResponse> {
-        return Result.success(
-            ProductResponse(
-                1L, "name0", "desc0", 10000, 9000, "SELLABLE", 1L, 1, listOf("imageUrl0")
-            )
-        )
+        return runCatching {
+            listOf(
+                ProductResponse(
+                    1L, "name0", "desc0", 10000, 9000, "SELLABLE", 1L, 1, listOf("imageUrl0")
+                ),
+                ProductResponse(
+                    2L, "name1", "desc1", 1000, 900, "SELLABLE", 2L, 2, listOf("imageUrl1")
+                )
+            ).find { it.id == id } ?: throw ErrorException.ProductException
+        }
     }
 
     override suspend fun findProductByBarcode(barcode: Long): Result<ProductResponse> {
