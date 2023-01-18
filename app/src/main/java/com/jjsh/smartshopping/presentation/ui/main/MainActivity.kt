@@ -15,6 +15,7 @@ import com.jjsh.smartshopping.presentation.ui.main.chart.ChartFragment
 import com.jjsh.smartshopping.presentation.ui.main.checklist.CheckListFragment
 import com.jjsh.smartshopping.presentation.ui.main.home.HomeFragment
 import com.jjsh.smartshopping.presentation.ui.mypage.MypageActivity
+import com.jjsh.smartshopping.presentation.ui.registration.product.ProductRegistrationActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -99,7 +100,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                binding.vpFragments.currentItem = 0
+                //binding.vpFragments.currentItem = 0
+                start<ProductRegistrationActivity>()
             }
             R.id.item_mypage -> {
                 start<MypageActivity>()

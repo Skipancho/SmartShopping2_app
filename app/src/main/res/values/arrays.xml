@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>0번 항목</item>
+        <item>1번 항목</item>
+        <item>2번 항목</item>
+        <item>3번 항목</item>
+        <item>4번 항목</item>
+        <item>5번 항목</item>
+        <item>6번 항목</item>
+    </string-array>
+</resources>
