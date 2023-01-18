@@ -5,10 +5,7 @@ import com.jjsh.smartshopping.data.remote.api.AuthService
 import com.jjsh.smartshopping.data.remote.api.ProductService
 import com.jjsh.smartshopping.data.remote.api.PurchaseService
 import com.jjsh.smartshopping.data.remote.api.ReviewService
-import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
-import com.jjsh.smartshopping.data.remote.request.ReviewRequest
-import com.jjsh.smartshopping.data.remote.request.SigninRequest
-import com.jjsh.smartshopping.data.remote.request.SignupRequest
+import com.jjsh.smartshopping.data.remote.request.*
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
 import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
 import com.jjsh.smartshopping.data.remote.response.ReviewResponse
@@ -16,6 +13,7 @@ import com.jjsh.smartshopping.data.remote.response.SigninResponse
 import com.jjsh.smartshopping.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
@@ -161,6 +159,28 @@ class RemoteDataSourceImpl @Inject constructor(
                 val response = reviewService.getReviews(productId)
                 response.successOrThrow()
                 response.getOrThrow(ErrorException.ReviewException)
+            }
+        }
+    }
+
+    override suspend fun registerProduct(productRegistrationRequest: ProductRegistrationRequest): Result<Unit> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                productService.registerProduct(productRegistrationRequest).successOrThrow()
+            }
+        }
+    }
+
+    override suspend fun uploadImages(images: List<MultipartBody.Part>): Result<List<Long>> {
+        return withContext(ioDispatcher) {
+            runCatching {
+                val imageIds = mutableListOf<Long>()
+                images.forEach {
+                    val response = productService.uploadDetailImage(it)
+                    response.successOrThrow()
+                    imageIds.add(response.getOrThrow(ErrorException.DefaultException("")))
+                }
+                imageIds
             }
         }
     }

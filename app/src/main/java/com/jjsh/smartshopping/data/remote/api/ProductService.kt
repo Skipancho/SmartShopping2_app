@@ -1,10 +1,10 @@
 package com.jjsh.smartshopping.data.remote.api
 
 import com.jjsh.smartshopping.data.remote.ApiResponse
+import com.jjsh.smartshopping.data.remote.request.ProductRegistrationRequest
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface ProductService {
     @GET("/api/v1/products")
@@ -25,4 +25,15 @@ interface ProductService {
     suspend fun findProductByBarcode(
         @Path("barcode") barcode: Long
     ): ApiResponse<ProductResponse>
+
+    @POST("/api/v1/products")
+    suspend fun registerProduct(
+        @Body productRegistrationRequest: ProductRegistrationRequest
+    ): ApiResponse<Unit>
+
+    @Multipart
+    @POST("/api/v1/image")
+    suspend fun uploadDetailImage(
+        @Part image : MultipartBody.Part
+    ): ApiResponse<Long>
 }

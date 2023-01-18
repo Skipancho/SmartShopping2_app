@@ -1,13 +1,11 @@
 package com.jjsh.smartshopping.data.remote.datasource
 
-import com.jjsh.smartshopping.data.remote.request.PurchaseRequest
-import com.jjsh.smartshopping.data.remote.request.ReviewRequest
-import com.jjsh.smartshopping.data.remote.request.SigninRequest
-import com.jjsh.smartshopping.data.remote.request.SignupRequest
+import com.jjsh.smartshopping.data.remote.request.*
 import com.jjsh.smartshopping.data.remote.response.ProductResponse
 import com.jjsh.smartshopping.data.remote.response.PurchaseResponse
 import com.jjsh.smartshopping.data.remote.response.ReviewResponse
 import com.jjsh.smartshopping.data.remote.response.SigninResponse
+import okhttp3.MultipartBody
 
 interface RemoteDataSource {
 
@@ -59,4 +57,12 @@ interface RemoteDataSource {
     suspend fun getReviews(
         productId: Long?
     ): Result<List<ReviewResponse>>
+
+    suspend fun registerProduct(
+        productRegistrationRequest: ProductRegistrationRequest
+    ): Result<Unit>
+
+    suspend fun uploadImages(
+        images: List<MultipartBody.Part>
+    ): Result<List<Long>>
 }

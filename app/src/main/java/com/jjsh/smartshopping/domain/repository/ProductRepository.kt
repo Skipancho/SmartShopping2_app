@@ -1,6 +1,8 @@
 package com.jjsh.smartshopping.domain.repository
 
 import com.jjsh.smartshopping.domain.model.Product
+import com.jjsh.smartshopping.domain.model.ProductRegistrationInfo
+import java.io.File
 
 interface ProductRepository {
     suspend fun getProducts(
@@ -17,6 +19,15 @@ interface ProductRepository {
     suspend fun findProductByBarcode(
         barcode: Long
     ): Result<Product>
+
+    suspend fun registerProduct(
+        productRegistrationInfo: ProductRegistrationInfo,
+        imageIds : List<Long>
+    ): Result<Unit>
+
+    suspend fun uploadDetailImage(
+        images : List<File>
+    ): Result<List<Long>>
 
     companion object {
         const val NEXT = "next"
