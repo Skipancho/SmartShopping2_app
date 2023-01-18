@@ -28,7 +28,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(R.layout.fragment_cart) {
                     viewModel.updateCartItem(item)
 
             },
-            _deleteCartItem = { item ->
+            deleteCartItem = { item ->
                 AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.text_do_you_wanna_delete))
                     .setPositiveButton(getString(R.string.text_yes)) { _, _ ->
