@@ -31,10 +31,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
-        viewModel.initProducts()
 
         initView()
         observeData()
+    }
+
+    override fun onResume() {
+        viewModel.initProducts()
+        super.onResume()
     }
 
     private fun initView() {
