@@ -20,8 +20,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "API_HOST", properties['API_HOST']
-        buildConfigField "int", "API_PORT", properties['API_PORT']
+        buildConfigField "String", "API_URL", properties['API_URL']
     }
 
     buildTypes {

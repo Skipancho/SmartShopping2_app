@@ -63,7 +63,7 @@ class ImageLoader(
     }
 
     private fun getUrlConnection(url: String): HttpURLConnection {
-        val newUrl = if (url.first() == '/') "${BuildConfig.API_HOST}:${BuildConfig.API_PORT}$url" else url
+        val newUrl = if (url.first() == '/') "${BuildConfig.API_URL}$url" else url
         var conn = URL(newUrl).openConnection() as HttpURLConnection
         var redirectCount = 0
         while (conn.responseCode / 100 == 3 && redirectCount++ < maxRedirect) {
