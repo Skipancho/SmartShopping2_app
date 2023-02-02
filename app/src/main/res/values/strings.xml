@@ -1,3 +1,64 @@
 <resources>
     <string name="app_name">SmartShopping</string>
+
+    <!--format-->
+    <string name="amount_format">%d개</string>
+    <string name="price_format">%,1d원</string>
+    <string name="add_btn_format">%d개 담기</string>
+    <string name="search_result_format">\"%1$s\"의 검색 결과</string>
+    <string name="year_month_format">%1d년 %2d월</string>
+
+    <!--toast msg-->
+    <string name="toast_msg_id_checked">이용 가능한 아이디 입니다.</string>
+    <string name="toast_msg_nickname_checked">이용 가능한 닉네임 입니다.</string>
+    <string name="toast_msg_success_signin">로그인에 성공하셨습니다.</string>
+    <string name="toast_msg_success_signup">회원가입에 성공하셨습니다.</string>
+    <string name="toast_msg_success_withdrawal">회원 탈퇴가 완료되었습니다.</string>
+
+    <!--dialog msg-->
+    <string name="dialog_msg_delete_review">리뷰를 삭제하시겠습니까?</string>
+
+    <!--error msg-->
+    <string name="err_msg_password">비밀번호가 일치하지 않습니다.</string>
+    <string name="err_msg_signin">로그인하는 과정에서 오류가 발생했습니다. 다시 시도해 주세요.</string>
+    <string name="err_msg_product">상품을 조회하는 과정에서 오류가 발생했습니다.</string>
+    <string name="err_msg_signup_checked">아이디 및 닉네임 중복 확인을 해주세요.</string>
+    <string name="err_msg_empty_member">빈칸을 확인해 주세요.</string>
+    <string name="err_msg_id_diff">아이디를 다시 확인해 주세요.</string>
+    <string name="err_disagree">동의 여부를 확인해 주세요.</string>
+    <string name="err_msg_unknown">알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.</string>
+
+    <string name="text_home">홈</string>
+    <string name="text_cart">장바구니</string>
+    <string name="text_checklist">체크리스트</string>
+    <string name="text_chart">지출 통계</string>
+    <string name="text_mypage">마이페이지</string>
+    <string name="text_sign_out">로그아웃</string>
+    <string name="text_search_product">상품을 검색하세요.</string>
+    <string name="hint_search">검색어 입력</string>
+    <string name="text_recently_search">최근 검색어</string>
+    <string name="text_delete_all">전체 삭제</string>
+    <string name="text_check_all">전체 선택</string>
+    <string name="text_check_item_delete">선택 삭제</string>
+    <string name="text_do_you_wanna_delete">삭제 하시겠습니까?</string>
+    <string name="text_yes">확인</string>
+    <string name="text_no">취소</string>
+    <string name="text_add_to_cart">장바구니에 상품 담기</string>
+    <string name="text_purchase_complete">구매 완료</string>
+    <string name="text_do_you_wanna_purchase">구매를 완료하시겠습니까?</string>
+    <string name="text_add_to_checklist">체크리스트 추가</string>
+    <string name="text_product_name">상품명</string>
+    <string name="text_amount">수량</string>
+    <string name="text_purchase_price">구매 가격</string>
+    <string name="text_purchase_record">구매 내역</string>
+    <string name="text_review_management">리뷰 관리</string>
+    <string name="text_write_review">리뷰 작성</string>
+    <string name="text_edit_review">리뷰 수정</string>
+    <string name="text_delete_review">리뷰 삭제</string>
+    <string name="text_review_is_empty">작성된 리뷰가 없습니다.</string>
+    <string name="text_input_id">아이디를 입력하세요.</string>
+    <string name="text_do_withdrawal">탈퇴하기</string>
+    <string name="text_agree_withdrawal_guide">탈퇴 조항 동의</string>
+    <string name="text_withdrawal_guide">회원 탈퇴 시 본 애플리케이션을 사용할 수 없으며 고객님의 정보는 즉각 삭제되니 안심하길 바라~^^</string>
+    <string name="text_withdrawal">회원 탈퇴</string>
 </resources>

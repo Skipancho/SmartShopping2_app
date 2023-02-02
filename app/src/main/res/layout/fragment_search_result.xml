@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.jjsh.smartshopping.presentation.ui.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.search.result.SearchResultFragment">
+
+        <TextView
+            android:id="@+id/tv_search_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:padding="8dp"
+            android:text="@{@string/search_result_format(viewModel.currentSearchText)}"
+            android:textColor="@color/gray_828282"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="@{viewModel.currentSearchText.isEmpty()? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintEnd_toStartOf="@id/ib_layout_grid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="~의 검색 결과" />
+
+        <ImageButton
+            android:id="@+id/ib_layout_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:background="@{viewModel.isLayoutTypeGrid? @drawable/ic_grid_selected : @drawable/ic_grid}"
+            android:onClick="@{() -> viewModel.setLayoutType(true)}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_search_result"
+            app:layout_constraintEnd_toStartOf="@id/ib_layout_linear"
+            app:layout_constraintStart_toEndOf="@id/tv_search_result"
+            app:layout_constraintTop_toTopOf="@id/tv_search_result" />
+
+        <ImageButton
+            android:id="@+id/ib_layout_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@{viewModel.isLayoutTypeGrid? @drawable/ic_linear : @drawable/ic_linear_selected}"
+            android:onClick="@{() -> viewModel.setLayoutType(false)}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_search_result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ib_layout_grid"
+            app:layout_constraintTop_toTopOf="@id/tv_search_result" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_search_result"
+            app:spanCount="2"
+            tools:listitem="@layout/item_product_grid" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
