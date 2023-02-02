@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.LruCache
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import com.jjsh.smartshopping.BuildConfig
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.net.HttpURLConnection
@@ -62,11 +63,12 @@ class ImageLoader(
     }
 
     private fun getUrlConnection(url: String): HttpURLConnection {
-        var conn = URL(url).openConnection() as HttpURLConnection
+        val newUrl = if (url.first() == '/') "${BuildConfig.API_URL}$url" else url
+        var conn = URL(newUrl).openConnection() as HttpURLConnection
         var redirectCount = 0
         while (conn.responseCode / 100 == 3 && redirectCount++ < maxRedirect) {
             val location = URLDecoder.decode(conn.getHeaderField("Location"), "UTF-8")
-            val next = URL(URL(url), location)
+            val next = URL(conn.url, location)
             conn = next.openConnection() as HttpURLConnection
         }
         return conn

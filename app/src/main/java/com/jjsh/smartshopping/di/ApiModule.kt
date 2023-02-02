@@ -65,7 +65,7 @@ object ApiModule {
     fun provideHttpClientRetrofit(
         @HttpClient httpClient: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("${BuildConfig.API_HOST}:${BuildConfig.API_PORT}")
+        .baseUrl(BuildConfig.API_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(httpClient)
         .build()
@@ -76,7 +76,7 @@ object ApiModule {
     fun provideRefreshClientRetrofit(
         @RefreshClient httpClient: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl("${BuildConfig.API_HOST}:${BuildConfig.API_PORT}")
+        .baseUrl(BuildConfig.API_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(httpClient)
         .build()
